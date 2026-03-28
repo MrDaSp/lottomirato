@@ -1,17 +1,26 @@
-# 📓 Diario di Bordo – Strategia LottoMirato (Ambi + Secchi)
+# 📓 Diario di Bordo – BetMirato (Sport Analytics & Value Betting)
 
-> Ultimo aggiornamento: 2026-03-28 11:40 – Migrazione GitHub Pages + Supabase completata
+> Ultimo aggiornamento: 2026-03-28 – PIVOT UFFICIALE completato: da LottoMirato a BetMirato
+
+---
+
+## 🛑 PRIMO COMANDAMENTO
+**L'OBIETTIVO È QUELLO DI AVERE UN PROCESSO SICURO PER ANDARE IN POSITIVO DA QUI A FINE ANNO.** 
+Non si gioca d'azzardo, si investe sull'Edge matematico offerto dal mercato (Value Betting).
 
 ---
 
-## 🎯 Obiettivo
+## 🎯 Nuovo Obiettivo (BetMirato)
 
-Applicare una strategia disciplinata basata su:
-- Numeri con ritardi elevati rispetto alla media storica
-- Selezione di ambi "mirati" (non casuali)
-- Gestione controllata del budget e del tempo
+Applicare una strategia disciplinata e puramente matematica sul mercato delle scommesse sportive:
+- Riconoscere le **Value Bet**: quote offerte dal bookmaker (es. Sisal Matchpoint) palesemente più alte della probabilità reale.
+- Utilizzare la **Distribuzione di Poisson** e l'analisi degli **Expected Goals (xG)**.
+- Applicare i modificatori di contesto reali (infortuni previsti, squalifiche, motivazioni di classifica).
+- **Gestione ferrea del Bankroll** senza rincorrere le perdite.
 
 ---
+
+## 📜 Storico Lavori e Analisi (LottoMirato - CHIUSO)
 
 ## 📊 Principio di Base
 
@@ -512,8 +521,15 @@ Il progetto rinasce istantaneamente sotto il nome di **"BetMirato"** (Sport Anal
 Ci immergiamo in un settore governato dalla statistica imperfetta: il Calcio Scommesse (riferimento a quote reali, es. *Sisal Matchpoint*).
 - **Nuovo Obiettivo:** Identificare il vero **"Value Bet"**. Il bookmaker assegna quote basate sul mercato della folla. L'App calcolerà oggettivamente le probabilità (tramite Distribuzione Poisson, xG, infortuni) e, quando il banco offre una quota più alta del reale, accenderà un **Semaforo Verde**.
 
-**Prima Azione:**
+**Prima Azione (28 Marzo 2026):**
 1. Raso al suolo l'ambiente Python obsoleto del Lotto.
 2. Inizio programmazione interfaccia `Match Analyzer` basata su variabili esatte: Quota Inserita ↔️ Probabilità Calcolata ↔️ Esito Modificatori (es. "Manca il Bomber! Dimentica questa scommessa, è un trappolone!").
 La caccia al banco inizia qui.
+
+**Rilascio V1 MVP - Motore Poisson (28 Marzo 2026):**
+- **Core Matematico:** Creazione file `betEngine.js`. Il motore calcola la Distribuzione di Poisson partendo dagli *Expected Goals (xG)* e ricava probabilità % pure per mercati `1X2` e `Under/Over`.
+- **UI Semaforica:** `index.html` riscritto totalmente e slegato dal Lotto. Ora presenta form di inserimento Quote Bookmaker + Dashboard Edge (Semaforo Verde, Giallo, Rosso).
+- **Integrità DB:** Mantenuto ed isolato il login Supabase (`storage.js`).
+- **Hotfix Rilasciato:** Risolto bug di transizione `doLogin/doRegister` mancanti dopo il rewrite dell'HTML, ripristinate le chiamate native `sbSignIn` e `sbSignUp`.
+- **Status:** MVP Live su GitHub Pages. Pronto per test e input manuale dell'utente.
 ---

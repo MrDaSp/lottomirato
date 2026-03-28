@@ -92,6 +92,7 @@
             <input type="password" id="password" class="form-input" placeholder="Password">
             <button class="btn-auth" onclick="handleLogin()">Accedi</button>
             <button class="btn-auth secondary" onclick="handleRegister()">Registrati</button>
+            <button class="btn-auth" style="background:var(--accent-blue);color:white;margin-top:0.5rem;" onclick="handleGuest()">Continua come Ospite (Demo)</button>
             <p style="font-size:0.75rem; color:var(--text-secondary); text-align:center; margin-top:1rem;">N.B. L'app non elabora pronostici garantiti, ma analizza l'Edge matematico delle quote.</p>
         </div>
     </div>
@@ -202,6 +203,11 @@
             } catch(err) {
                 document.getElementById('authError').textContent = err.message;
             }
+        }
+
+        function handleGuest() {
+            document.getElementById('authOverlay').classList.add('hidden');
+            document.getElementById('userInfo').textContent = 'Ospite';
         }
 
         async function handleLogout() {
