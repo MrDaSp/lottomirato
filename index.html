@@ -184,7 +184,7 @@
             const e = document.getElementById('email').value;
             const p = document.getElementById('password').value;
             try {
-                await doLogin(e, p);
+                await sbSignIn(e, p);
                 document.getElementById('authOverlay').classList.add('hidden');
                 document.getElementById('userInfo').textContent = getDisplayName();
             } catch(err) {
@@ -196,7 +196,7 @@
             const e = document.getElementById('email').value;
             const p = document.getElementById('password').value;
             try {
-                await doRegister(e, p);
+                await sbSignUp(e, p, "");
                 document.getElementById('authError').textContent = "Registrazione inviata! Controlla la tua email per confermare il link prima di accedere.";
                 document.getElementById('authError').style.color = "var(--accent-green)";
             } catch(err) {
@@ -205,7 +205,7 @@
         }
 
         async function handleLogout() {
-            await doLogout();
+            await sbSignOut();
             location.reload();
         }
 
