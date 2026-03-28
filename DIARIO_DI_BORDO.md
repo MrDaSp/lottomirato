@@ -532,4 +532,12 @@ La caccia al banco inizia qui.
 - **Integrità DB:** Mantenuto ed isolato il login Supabase (`storage.js`).
 - **Hotfix Rilasciato:** Risolto bug di transizione `doLogin/doRegister` mancanti dopo il rewrite dell'HTML, ripristinate le chiamate native `sbSignIn` e `sbSignUp`.
 - **Status:** MVP Live su GitHub Pages. Pronto per test e input manuale dell'utente.
+
 ---
+
+### 🧹 Refactoring e Pulizia Definitiva Beta 1 (28 Marzo 2026)
+Per consolidare il nuovo percorso "BetMirato", abbiamo eseguito una purga definitiva:
+1. **Smantellamento Lotto:** Rimossi per sempre script e db legacy: `analisi_frequenze.py`, `backtest.py`, `controlla_estrazione.py`, cartella `legacy/`, `lottomirato.db` e i vecchi archivi `.txt` delle estrazioni.
+2. **Aggiornamento Accessibilità:** Inserita in `index.html` la funzione "Оspite (Demo Mode)". Ora è possibile testare le matematiche di Value Bet immediatamente scavalcando le registrazioni Auth.
+3. **Re-Branding Git:** Configurato il repository col nuovo origin remoto `betmirato` anziché lottomirato.
+4. **Primo Comandamento:** Fissato nero su bianco in cima al Diario il nuovo traguardo netto: *Avere un processo sicuro per andare in positivo da qui a fine anno.*
