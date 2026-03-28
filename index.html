@@ -473,10 +473,11 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="analisi.js"></script>
 <script src="storage.js"></script>
 <script>
+initSupabase();
 let wizardData = null, selectedWizard = new Set(), estrazioniCache = null;
 
 function showToast(m,t='info'){const e=document.getElementById('toast');e.textContent=m;e.className=`toast ${t}`;setTimeout(()=>e.classList.add('show'),10);setTimeout(()=>e.classList.remove('show'),3500)}
