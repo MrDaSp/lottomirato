@@ -541,3 +541,9 @@ Per consolidare il nuovo percorso "BetMirato", abbiamo eseguito una purga defini
 2. **Aggiornamento Accessibilità:** Inserita in `index.html` la funzione "Оspite (Demo Mode)". Ora è possibile testare le matematiche di Value Bet immediatamente scavalcando le registrazioni Auth.
 3. **Re-Branding Git:** Configurato il repository col nuovo origin remoto `betmirato` anziché lottomirato.
 4. **Primo Comandamento:** Fissato nero su bianco in cima al Diario il nuovo traguardo netto: *Avere un processo sicuro per andare in positivo da qui a fine anno.*
+
+### 🤖 Automazione e Dati Reali (28 Marzo 2026)
+L'app si è trasformata da "Calcolatrice Manuale" a "Cruscotto Finanziario Automatico" per evitare errori di calcolo dell'utente e fornirgli già le analisi pronte. All'accensione carica il feed live generato per lui.
+1. **Layout KANBAN:** L'interfaccia è stata scomposta in tre colonne esplicite (Verdi a sinistra, Gialli al centro, Rossi a destra) per garantire una leggibilità spietata e immediata dei segnali "Strong Buy" ed evitare le perdite di tempo sulle partite ordinarie.
+2. **Il Mio Bankroll (Tracker):** Sotto al cruscotto, abbiamo introdotto il primo strumento di Accounting. Gli utenti possono spingere "Piazza Giocata" simulandola direttamente con i loro capitali (Stake). L'app disegna un grafico in tempo reale (`Chart.js`) dei profitti netti, salvando momentaneamente i file del portafoglio in `localStorage` per permettere i test agli Ospiti.
+3. **The-Odds-API Live:** Mettendo in pensione i dummy data di prova, il modulo backend `scanner.py` (`requests`) è stato allacciato alla rete globale. Ora estrae quote empiriche, partite pre-match e mercati 1x2 reali (Serie A, Premier League) passandoli nel modello di Poisson. Il polmone del sistema respira da solo eseguendosi e aggiornando il sito 3 volte al giorno grazie alla schedulazione Cron in GitHub Actions.
