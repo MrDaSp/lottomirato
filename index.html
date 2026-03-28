@@ -104,82 +104,21 @@
             <span id="userInfo" style="margin-right:1rem; font-size:0.9rem;"></span>
             <button class="btn-logout" onclick="handleLogout()">Esci</button>
         </div>
-    </header>
-
-    <!-- MAIN DASHBOARD -->
+    </heade    <!-- MAIN DASHBOARD AUTOMATICA -->
     <main class="main" id="mainDash">
-        
-        <div class="grid-2">
-            <!-- COLONNA 1: SETTAGGI MATCH -->
-            <div class="card">
-                <div class="card-title">1. Match Analyzer (Algoritmo Poisson)</div>
-                <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">
-                    <strong>Dove trovo questi dati?</strong> Usa siti gratuiti come <a href="https://footystats.org/it/" target="_blank" style="color:var(--accent-blue)">FootyStats</a> o <a href="https://fbref.com/it/" target="_blank" style="color:var(--accent-blue)">FbRef</a> per trovare la media dei gol attesi (xG) segnati/subiti dalle due squadre nelle ultime partite.
-                </p>
-                <div class="grid-2">
-                    <div class="team-box">
-                        <div class="team-title">Casa (Home)</div>
-                        <div class="input-group">
-                            <label>Forza Attacco Casa (xG Segnati medi)</label>
-                            <input type="number" step="0.1" id="xgHome" value="1.6">
-                        </div>
-                        <div style="margin-top:1rem">
-                            <label style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:0.3rem;display:block">Modificatori Contesto:</label>
-                            <label class="checkbox-group"><input type="checkbox" id="modHomeBomberOut"> Manca Bomber (-15% xG)</label>
-                            <label class="checkbox-group"><input type="checkbox" id="modHomeDefOut"> Difesa in Emergenza (+15% subiti)</label>
-                            <label class="checkbox-group"><input type="checkbox" id="modHomeMotiv"> Motivazione Alta / Derby (+10% xG)</label>
-                        </div>
-                    </div>
-                    <div class="team-box">
-                        <div class="team-title">Trasferta (Away)</div>
-                        <div class="input-group">
-                            <label>Forza Attacco Trasferta (xG Segnati medi)</label>
-                            <input type="number" step="0.1" id="xgAway" value="1.1">
-                        </div>
-                        <div style="margin-top:1rem">
-                            <label style="font-size:0.75rem;color:var(--text-secondary);margin-bottom:0.3rem;display:block">Modificatori Contesto:</label>
-                            <label class="checkbox-group"><input type="checkbox" id="modAwayBomberOut"> Manca Bomber (-15% xG)</label>
-                            <label class="checkbox-group"><input type="checkbox" id="modAwayDefOut"> Difesa in Emergenza (+15% subiti)</label>
-                            <label class="checkbox-group"><input type="checkbox" id="modAwayTurnover"> Turn-Over Ampio (-20% xG)</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- COLONNA 2: QUOTE E SEMAFORO -->
-            <div class="card">
-                <div class="card-title">2. Inserimento Quote Bookmaker (Sisal)</div>
-                <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem;">
-                    <strong>Dove trovo questi dati?</strong> Guarda la colonna <strong>"Esito Finale 1x2"</strong> sul sito Sisal (es. per Stati Uniti-Belgio: 1=2.90, X=3.60, 2=2.20).
-                </p>
-                <div class="grid-3" style="margin-bottom: 1.5rem;">
-                    <div class="input-group"><label>Quota 1</label><input type="number" step="0.01" id="q1" value="2.10"></div>
-                    <div class="input-group"><label>Quota X</label><input type="number" step="0.01" id="qx" value="3.40"></div>
-                    <div class="input-group"><label>Quota 2</label><input type="number" step="0.01" id="q2" value="3.60"></div>
-                </div>
-                
-                <button class="btn-calc" onclick="eseguiAnalisi()">⚡ ANALIZZA VALUE BET</button>
-            </div>
+        <div class="card" style="text-align:center; padding: 2rem;">
+            <h2>Cruscotto Scanner Value Bet 🤖</h2>
+            <p style="color:var(--text-secondary); margin-top:0.5rem;" id="lastUpdate">Ultimo aggiornamento: Caricamento in corso...</p>
+            <p style="font-size:0.9rem; margin-top:1rem; padding:1rem; background:rgba(46, 204, 113, 0.1); border:1px solid var(--accent-green); border-radius:8px; display:inline-block;">
+                Le opportunità sono ordinate dalla più redditizia (Verde) alle trappole (Rosso).
+            </p>
         </div>
 
-        <!-- TABELLONE RISULTATI SEMAFORICI -->
-        <div class="card" id="resultsPanel">
-            <div class="card-title">3. Valutazione Edge (Il Mercato contro la Matematica)</div>
-            
-            <h3 style="font-size: 1rem; margin-bottom: 0.8rem; color: white;">Esito Finale 1X2</h3>
-            <div id="res1X2" class="result-box">
-                <div class="signal-row" style="border-left-color: gray;">
-                    <div class="signal-stats" style="text-align:center; color:var(--text-secondary);">
-                        Compila i moduli sopra e premi "Analizza Value Bet" per visualizzare i semafori (Verde, Giallo, Rosso).
-                    </div>
-                </div>
-            </div>
-            
-            <h3 style="font-size: 1rem; margin-bottom: 0.8rem; color: white; margin-top: 2rem;">Altri Mercati Popolari (Beta)</h3>
-            <div id="resOther" class="result-box"></div>
+        <div id="matchesContainer" style="display:flex; flex-direction:column; gap:1.5rem;">
+            <!-- Le partite verranno caricate dinamicamente qui dal JSON -->
+            <div class="text-center" style="color:var(--text-secondary); padding: 2rem;">⏳ In attesa del server scanner...</div>
         </div>
-
-    </main>
+    </main>/main>
 
     <script>
         // Init Auth base
@@ -190,6 +129,7 @@
                 document.getElementById('authOverlay').classList.remove('hidden');
             } else {
                 document.getElementById('userInfo').textContent = getDisplayName();
+                caricaDashboard(); // Auto-load se già loggato
             }
         });
 
@@ -200,6 +140,7 @@
                 await sbSignIn(e, p);
                 document.getElementById('authOverlay').classList.add('hidden');
                 document.getElementById('userInfo').textContent = getDisplayName();
+                caricaDashboard();
             } catch(err) {
                 document.getElementById('authError').textContent = err.message;
             }
@@ -220,6 +161,7 @@
         function handleGuest() {
             document.getElementById('authOverlay').classList.add('hidden');
             document.getElementById('userInfo').textContent = 'Ospite';
+            caricaDashboard();
         }
 
         async function handleLogout() {
@@ -227,85 +169,61 @@
             location.reload();
         }
 
-        // ====== MOTORE BETMIRATO UI ======
+        // ====== MOTORE DASHBOARD AUTOMATICO ======
         
-        function eseguiAnalisi() {
-            // 1. Raccogli i valori grezzi expected goals
-            let baseHome = parseFloat(document.getElementById('xgHome').value) || 1.0;
-            let baseAway = parseFloat(document.getElementById('xgAway').value) || 1.0;
-            
-            // 2. Applica Modificatori (Contesto Reale)
-            // Logica semplificata crociata: se la squadra avversa ha difesa rotta, il mio xG cresce.
-            let modHome = 1.0;
-            if(document.getElementById('modHomeBomberOut').checked) modHome -= 0.15;
-            if(document.getElementById('modHomeMotiv').checked) modHome += 0.10;
-            if(document.getElementById('modAwayDefOut').checked) modHome += 0.15; // L'attacco di casa gode se la difesa ospite è rotta
-            
-            let modAway = 1.0;
-            if(document.getElementById('modAwayBomberOut').checked) modAway -= 0.15;
-            if(document.getElementById('modAwayTurnover').checked) modAway -= 0.20;
-            if(document.getElementById('modHomeDefOut').checked) modAway += 0.15;
-            
-            let lambdaH = baseHome * modHome;
-            let lambdaA = baseAway * modAway;
-            
-            // 3. Calcola Probabilità (dal file betEngine.js)
-            let probabilita = calcolaProbabilita(lambdaH, lambdaA);
-            
-            // 4. Raccogli Quote Sisal
-            let q1 = parseFloat(document.getElementById('q1').value);
-            let qX = parseFloat(document.getElementById('qx').value);
-            let q2 = parseFloat(document.getElementById('q2').value);
-            
-            // 5. Render Risultati
-            document.getElementById('resultsPanel').style.display = 'block';
-            let resHtml = '';
-            
-            // Costruiamo le righe 1X2
-            let esiti = [
-                { id: '1', reqProb: probabilita['1'], reqQuota: q1, name: 'Vittoria Casa (1)' },
-                { id: 'X', reqProb: probabilita['X'], reqQuota: qX, name: 'Pareggio (X)' },
-                { id: '2', reqProb: probabilita['2'], reqQuota: q2, name: 'Vittoria Trasferta (2)' },
-            ];
-            
-            esiti.forEach(item => {
-                let semaforo = analizzaValueBetSemaforo(item.reqQuota, parseFloat(item.reqProb));
-                if(semaforo) {
-                    let cls = semaforo.colore === '#2ecc71' ? 'VERDE' : (semaforo.colore === '#f1c40f' ? 'GIALLA' : 'ROSSA');
-                    let sign = semaforo.vantaggio > 0 ? '+' : '';
-                    resHtml += `
-                        <div class="signal-row ${cls}">
-                            <div class="signal-esito" style="color:${semaforo.colore}">${item.id}</div>
-                            <div class="signal-stats">
-                                <div class="signal-prob">${item.name} | Prob. Macchina: <strong>${item.reqProb}%</strong> vs Prob. Bookmaker: <strong>${(100/item.reqQuota).toFixed(1)}%</strong></div>
-                                <div class="signal-status">${semaforo.status}</div>
+        async function caricaDashboard() {
+            try {
+                const response = await fetch('valuebets.json?t=' + new Date().getTime()); // Evita cache
+                const data = await response.json();
+                
+                document.getElementById('lastUpdate').textContent = `Ultimo aggiornamento scanner: ${data.ultimo_aggiornamento}`;
+                
+                let html = '';
+                data.partite.forEach(p => {
+                    let c = p.consiglio;
+                    let displayColor = 'gray';
+                    let bg = 'var(--bg-card)';
+                    let labelStatus = "DA EVITARE";
+                    
+                    if(c.semaforo === 'verde') { displayColor = 'var(--accent-green)'; bg = 'rgba(46, 204, 113, 0.1)'; labelStatus = 'VANTAGGIO ALTO (GIOCA)'; }
+                    if(c.semaforo === 'gialla') { displayColor = 'var(--accent-yellow)'; bg = 'rgba(241, 196, 15, 0.1)'; labelStatus = 'MARGINE LIEVE'; }
+                    if(c.semaforo === 'rossa') { displayColor = 'var(--accent-red)'; labelStatus = 'TRAPPOLA (NON GIOCARE)'; }
+                    
+                    html += `
+                        <div class="card" style="border-left: 5px solid ${displayColor}; background: ${bg}; margin-bottom: 0;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:1rem; margin-bottom:1rem;">
+                                <div>
+                                    <div style="font-size:0.8rem; color:var(--text-secondary)">${p.data_inizio} • ${p.campionato}</div>
+                                    <div style="font-size:1.3rem; font-weight:800; margin-top:0.3rem">${p.squadra_casa} - ${p.squadra_ospite}</div>
+                                    <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.4rem;">Quote Sisal -> 1: ${p.quote['1']} | X: ${p.quote['X']} | 2: ${p.quote['2']}</div>
+                                </div>
+                                <div style="text-align:right">
+                                    <div style="font-size:0.85rem; color:var(--text-secondary)">Giocata Suggerita:</div>
+                                    <div style="color:white; font-size:2rem; font-weight:900; line-height:1;">Esito ${c.segno}</div>
+                                    <div style="color:var(--accent-blue); font-size:1.1rem; font-weight:700;">Quota: ${c.quota_bookmaker.toFixed(2)}</div>
+                                </div>
                             </div>
-                            <div class="signal-edge" style="color:${semaforo.colore}">${sign}${semaforo.vantaggio}% EDGE</div>
+                            
+                            <div class="grid-2" style="align-items:center;">
+                                <div>
+                                    <div style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.3rem;">Probabilità Secondo il Bookmaker: <strong>${c.prob_bookmaker}%</strong></div>
+                                    <div style="font-size:0.85rem; color:var(--text-secondary);">Probabilità Calcolata Algoritmo: <strong style="color:white">${c.prob_calcolata}%</strong></div>
+                                </div>
+                                <div style="text-align:right">
+                                    <div style="font-size:0.8rem; font-weight:700; color:${displayColor}; text-transform:uppercase; margin-bottom:0.2rem;">${labelStatus}</div>
+                                    <div style="font-size:1.8rem; font-family:'JetBrains Mono', monospace; font-weight:900; color:${displayColor}">${c.edge > 0 ? '+' : ''}${c.edge}% EDGE</div>
+                                </div>
+                            </div>
                         </div>
                     `;
-                } else {
-                    resHtml += `<div class="signal-row"><div class="signal-stats">Inserisci la quota per l'esito ${item.id}</div></div>`;
-                }
-            });
-            
-            document.getElementById('res1X2').innerHTML = resHtml;
-            
-            // Demo Under Over
-            document.getElementById('resOther').innerHTML = `
-                <div class="signal-row" style="opacity: 0.8">
-                    <div class="signal-esito" style="font-size:1.2rem; width:100px;">Under 2.5</div>
-                    <div class="signal-stats">Probabilità Calcolata: <strong>${probabilita['U25']}%</strong></div>
-                    <div style="font-size:0.8rem; color:var(--text-muted)">Quote Bookmaker non fornite</div>
-                </div>
-                <div class="signal-row" style="opacity: 0.8">
-                    <div class="signal-esito" style="font-size:1.2rem; width:100px;">Over 2.5</div>
-                    <div class="signal-stats">Probabilità Calcolata: <strong>${probabilita['O25']}%</strong></div>
-                    <div style="font-size:0.8rem; color:var(--text-muted)">Quote Bookmaker non fornite</div>
-                </div>
-            `;
-            
-            // Smooth scroll ai risultati
-            document.getElementById('resultsPanel').scrollIntoView({ behavior: 'smooth' });
+                });
+                
+                document.getElementById('matchesContainer').innerHTML = html;
+                
+            } catch(e) {
+                console.error(e);
+                document.getElementById('matchesContainer').innerHTML = '<div class="card text-center" style="color:var(--accent-red)">Nessun dato scanner disponibile o Errore nel caricamento delle partite. Esegui prima lo scanner!</div>';
+            }
         }
     </script>
 </body>

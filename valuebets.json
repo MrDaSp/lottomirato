@@ -1,0 +1,285 @@
+{
+    "ultimo_aggiornamento": "2026-03-28 18:56:31",
+    "partite": [
+        {
+            "id": "match_11",
+            "campionato": "Serie A",
+            "squadra_casa": "Lazio",
+            "squadra_ospite": "Frosinone",
+            "data_inizio": "2026-03-30 02:56",
+            "quote": {
+                "1": 1.77,
+                "X": 3.66,
+                "2": 7.35
+            },
+            "consiglio": {
+                "segno": "1",
+                "quota_bookmaker": 1.77,
+                "prob_bookmaker": 56.5,
+                "prob_calcolata": 70.9,
+                "edge": 14.4,
+                "semaforo": "verde"
+            }
+        },
+        {
+            "id": "match_special_0",
+            "campionato": "Serie A",
+            "squadra_casa": "Juventus",
+            "squadra_ospite": "Salernitana",
+            "data_inizio": "2026-03-30 05:56",
+            "quote": {
+                "1": 1.8,
+                "X": 4.0,
+                "2": 6.0
+            },
+            "consiglio": {
+                "segno": "1",
+                "quota_bookmaker": 1.8,
+                "prob_bookmaker": 55.6,
+                "prob_calcolata": 63.9,
+                "edge": 8.4,
+                "semaforo": "verde"
+            }
+        },
+        {
+            "id": "match_7",
+            "campionato": "Serie A",
+            "squadra_casa": "Torino",
+            "squadra_ospite": "Bologna",
+            "data_inizio": "2026-03-29 19:56",
+            "quote": {
+                "1": 1.5,
+                "X": 3.81,
+                "2": 7.43
+            },
+            "consiglio": {
+                "segno": "1",
+                "quota_bookmaker": 1.5,
+                "prob_bookmaker": 66.7,
+                "prob_calcolata": 74.8,
+                "edge": 8.2,
+                "semaforo": "verde"
+            }
+        },
+        {
+            "id": "match_4",
+            "campionato": "Serie A",
+            "squadra_casa": "Empoli",
+            "squadra_ospite": "Torino",
+            "data_inizio": "2026-03-29 13:56",
+            "quote": {
+                "1": 5.41,
+                "X": 3.54,
+                "2": 1.83
+            },
+            "consiglio": {
+                "segno": "2",
+                "quota_bookmaker": 1.83,
+                "prob_bookmaker": 54.6,
+                "prob_calcolata": 62.5,
+                "edge": 7.8,
+                "semaforo": "verde"
+            }
+        },
+        {
+            "id": "match_13",
+            "campionato": "Serie A",
+            "squadra_casa": "Lecce",
+            "squadra_ospite": "Sassuolo",
+            "data_inizio": "2026-03-30 08:56",
+            "quote": {
+                "1": 5.05,
+                "X": 3.46,
+                "2": 1.53
+            },
+            "consiglio": {
+                "segno": "2",
+                "quota_bookmaker": 1.53,
+                "prob_bookmaker": 65.4,
+                "prob_calcolata": 71.3,
+                "edge": 6.0,
+                "semaforo": "verde"
+            }
+        },
+        {
+            "id": "match_9",
+            "campionato": "Serie A",
+            "squadra_casa": "Lazio",
+            "squadra_ospite": "Monza",
+            "data_inizio": "2026-03-30 00:56",
+            "quote": {
+                "1": 1.63,
+                "X": 4.38,
+                "2": 8.17
+            },
+            "consiglio": {
+                "segno": "X",
+                "quota_bookmaker": 4.38,
+                "prob_bookmaker": 22.8,
+                "prob_calcolata": 28.8,
+                "edge": 5.9,
+                "semaforo": "verde"
+            }
+        },
+        {
+            "id": "match_8",
+            "campionato": "Serie A",
+            "squadra_casa": "Udinese",
+            "squadra_ospite": "Roma",
+            "data_inizio": "2026-03-29 10:56",
+            "quote": {
+                "1": 5.93,
+                "X": 3.33,
+                "2": 1.82
+            },
+            "consiglio": {
+                "segno": "2",
+                "quota_bookmaker": 1.82,
+                "prob_bookmaker": 54.9,
+                "prob_calcolata": 59.8,
+                "edge": 4.9,
+                "semaforo": "gialla"
+            }
+        },
+        {
+            "id": "match_special_1",
+            "campionato": "Serie A",
+            "squadra_casa": "Napoli",
+            "squadra_ospite": "Udinese",
+            "data_inizio": "2026-03-29 17:56",
+            "quote": {
+                "1": 1.8,
+                "X": 4.0,
+                "2": 6.0
+            },
+            "consiglio": {
+                "segno": "1",
+                "quota_bookmaker": 1.8,
+                "prob_bookmaker": 55.6,
+                "prob_calcolata": 59.2,
+                "edge": 3.7,
+                "semaforo": "gialla"
+            }
+        },
+        {
+            "id": "match_3",
+            "campionato": "Serie A",
+            "squadra_casa": "Frosinone",
+            "squadra_ospite": "Inter",
+            "data_inizio": "2026-03-29 19:56",
+            "quote": {
+                "1": 6.34,
+                "X": 3.32,
+                "2": 1.58
+            },
+            "consiglio": {
+                "segno": "2",
+                "quota_bookmaker": 1.58,
+                "prob_bookmaker": 63.3,
+                "prob_calcolata": 66.2,
+                "edge": 2.9,
+                "semaforo": "gialla"
+            }
+        },
+        {
+            "id": "match_1",
+            "campionato": "Serie A",
+            "squadra_casa": "Genoa",
+            "squadra_ospite": "Cagliari",
+            "data_inizio": "2026-03-30 05:56",
+            "quote": {
+                "1": 2.76,
+                "X": 2.99,
+                "2": 2.68
+            },
+            "consiglio": {
+                "segno": "X",
+                "quota_bookmaker": 2.99,
+                "prob_bookmaker": 33.4,
+                "prob_calcolata": 34.6,
+                "edge": 1.1,
+                "semaforo": "gialla"
+            }
+        },
+        {
+            "id": "match_5",
+            "campionato": "Serie A",
+            "squadra_casa": "Lecce",
+            "squadra_ospite": "Monza",
+            "data_inizio": "2026-03-29 12:56",
+            "quote": {
+                "1": 2.59,
+                "X": 2.91,
+                "2": 2.99
+            },
+            "consiglio": {
+                "segno": "1",
+                "quota_bookmaker": 2.59,
+                "prob_bookmaker": 38.6,
+                "prob_calcolata": 38.1,
+                "edge": -0.6,
+                "semaforo": "rossa"
+            }
+        },
+        {
+            "id": "match_12",
+            "campionato": "Serie A",
+            "squadra_casa": "Cagliari",
+            "squadra_ospite": "Verona",
+            "data_inizio": "2026-03-29 12:56",
+            "quote": {
+                "1": 2.31,
+                "X": 3.25,
+                "2": 2.62
+            },
+            "consiglio": {
+                "segno": "X",
+                "quota_bookmaker": 3.25,
+                "prob_bookmaker": 30.8,
+                "prob_calcolata": 29.4,
+                "edge": -1.3,
+                "semaforo": "rossa"
+            }
+        },
+        {
+            "id": "match_0",
+            "campionato": "Serie A",
+            "squadra_casa": "Udinese",
+            "squadra_ospite": "Milan",
+            "data_inizio": "2026-03-28 22:56",
+            "quote": {
+                "1": 6.75,
+                "X": 3.46,
+                "2": 1.54
+            },
+            "consiglio": {
+                "segno": "X",
+                "quota_bookmaker": 3.46,
+                "prob_bookmaker": 28.9,
+                "prob_calcolata": 27.5,
+                "edge": -1.4,
+                "semaforo": "rossa"
+            }
+        },
+        {
+            "id": "match_2",
+            "campionato": "Serie A",
+            "squadra_casa": "Verona",
+            "squadra_ospite": "Fiorentina",
+            "data_inizio": "2026-03-30 03:56",
+            "quote": {
+                "1": 4.64,
+                "X": 3.32,
+                "2": 1.53
+            },
+            "consiglio": {
+                "segno": "1",
+                "quota_bookmaker": 4.64,
+                "prob_bookmaker": 21.6,
+                "prob_calcolata": 18.3,
+                "edge": -3.2,
+                "semaforo": "rossa"
+            }
+        }
+    ]
+}
