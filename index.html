@@ -7,6 +7,7 @@
     <meta name="description" content="Motore predittivo per il rilevamento di Value Bets sul Calcio tramite Poisson.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="storage.js"></script>
     <script src="betEngine.js"></script>
     <style>
@@ -30,6 +31,7 @@
         .text-center { text-align: center; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .grid-responsive { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
         
         /* Auth Screen (Preservata) */
         .auth-overlay { position: fixed; inset: 0; background: var(--bg-primary); z-index: 200; display: flex; align-items: center; justify-content: center; }
@@ -62,6 +64,8 @@
         
         .btn-calc { width: 100%; padding: 1rem; background: linear-gradient(135deg, var(--accent-green), #27ae60); color: black; font-size: 1.1rem; font-weight: 800; border: none; border-radius: 8px; cursor: pointer; margin-top: 1rem; transition: transform 0.2s; }
         .btn-calc:hover { transform: translateY(-2px); }
+        .btn-bet { padding: 0.8rem; background: var(--accent-blue); color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; width: 100%; transition: opacity 0.2s; margin-top: 1rem; }
+        .btn-bet:hover { opacity: 0.9; }
 
         /* Risultati Semaforo */
         .result-box { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
@@ -106,17 +110,39 @@
         </div>
     </heade    <!-- MAIN DASHBOARD AUTOMATICA -->
     <main class="main" id="mainDash">
-        <div class="card" style="text-align:center; padding: 2rem;">
+        <div class="card" style="text-align:center; padding: 1.5rem;">
             <h2>Cruscotto Scanner Value Bet 🤖</h2>
             <p style="color:var(--text-secondary); margin-top:0.5rem;" id="lastUpdate">Ultimo aggiornamento: Caricamento in corso...</p>
-            <p style="font-size:0.9rem; margin-top:1rem; padding:1rem; background:rgba(46, 204, 113, 0.1); border:1px solid var(--accent-green); border-radius:8px; display:inline-block;">
-                Le opportunità sono ordinate dalla più redditizia (Verde) alle trappole (Rosso).
-            </p>
         </div>
 
-        <div id="matchesContainer" style="display:flex; flex-direction:column; gap:1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3>Opportunità del Giorno</h3>
+            <button onclick="document.getElementById('bankrollSection').scrollIntoView({behavior:'smooth'})" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue); padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Vai a Il Mio Bankroll 📈</button>
+        </div>
+
+        <!-- GRIGLIA A 3 COLONNE -->
+        <div id="matchesContainer" class="grid-responsive">
             <!-- Le partite verranno caricate dinamicamente qui dal JSON -->
-            <div class="text-center" style="color:var(--text-secondary); padding: 2rem;">⏳ In attesa del server scanner...</div>
+            <div class="text-center" style="color:var(--text-secondary); padding: 2rem; grid-column: 1 / -1;">⏳ In attesa del server scanner...</div>
+        </div>
+
+        <!-- SEZIONE BANKROLL (IL MIO PORTAFOGLIO) -->
+        <div id="bankrollSection" style="margin-top: 4rem; border-top: 1px solid var(--border); padding-top: 2rem;">
+            <h2 style="margin-bottom: 1.5rem; color: var(--accent-green);">📈 Il Mio Bankroll</h2>
+            <div class="grid-2">
+                <div class="card" style="background: var(--bg-card); display: flex; flex-direction: column;">
+                    <div class="card-title">Andamento Profitto</div>
+                    <div style="flex:1; display:flex; align-items:center;">
+                        <canvas id="profitChart" style="width: 100%; aspect-ratio: 2/1;"></canvas>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Storico Scommesse (Demo Locale)</div>
+                    <div id="storicoScommesse" style="max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <!-- Schedine salvate -->
+                    </div>
+                </div>
+            </div>
         </div>
     </main>/main>
 
@@ -130,6 +156,7 @@
             } else {
                 document.getElementById('userInfo').textContent = getDisplayName();
                 caricaDashboard(); // Auto-load se già loggato
+                initBankroll();
             }
         });
 
@@ -141,6 +168,7 @@
                 document.getElementById('authOverlay').classList.add('hidden');
                 document.getElementById('userInfo').textContent = getDisplayName();
                 caricaDashboard();
+                initBankroll();
             } catch(err) {
                 document.getElementById('authError').textContent = err.message;
             }
@@ -162,6 +190,7 @@
             document.getElementById('authOverlay').classList.add('hidden');
             document.getElementById('userInfo').textContent = 'Ospite';
             caricaDashboard();
+            initBankroll();
         }
 
         async function handleLogout() {
@@ -190,29 +219,28 @@
                     if(c.semaforo === 'rossa') { displayColor = 'var(--accent-red)'; labelStatus = 'TRAPPOLA (NON GIOCARE)'; }
                     
                     html += `
-                        <div class="card" style="border-left: 5px solid ${displayColor}; background: ${bg}; margin-bottom: 0;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:1rem; margin-bottom:1rem;">
-                                <div>
-                                    <div style="font-size:0.8rem; color:var(--text-secondary)">${p.data_inizio} • ${p.campionato}</div>
-                                    <div style="font-size:1.3rem; font-weight:800; margin-top:0.3rem">${p.squadra_casa} - ${p.squadra_ospite}</div>
-                                    <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.4rem;">Quote Sisal -> 1: ${p.quote['1']} | X: ${p.quote['X']} | 2: ${p.quote['2']}</div>
+                        <div class="card" style="border-top: 5px solid ${displayColor}; background: ${bg}; margin-bottom: 0; display:flex; flex-direction:column; justify-content:space-between;">
+                            <div>
+                                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:0.8rem; margin-bottom:1rem;">
+                                    <div>
+                                        <div style="font-size:0.7rem; color:var(--text-secondary)">${p.data_inizio}</div>
+                                        <div style="font-size:1.1rem; font-weight:800; margin-top:0.2rem">${p.squadra_casa} - ${p.squadra_ospite}</div>
+                                    </div>
+                                    <div style="text-align:right">
+                                        <div style="font-size:0.75rem; font-weight:700; color:${displayColor}; text-transform:uppercase;">${labelStatus}</div>
+                                        <div style="font-size:1.3rem; font-family:'JetBrains Mono', monospace; font-weight:900; color:${displayColor}">${c.edge > 0 ? '+' : ''}${c.edge}%</div>
+                                    </div>
                                 </div>
-                                <div style="text-align:right">
-                                    <div style="font-size:0.85rem; color:var(--text-secondary)">Giocata Suggerita:</div>
-                                    <div style="color:white; font-size:2rem; font-weight:900; line-height:1;">Esito ${c.segno}</div>
-                                    <div style="color:var(--accent-blue); font-size:1.1rem; font-weight:700;">Quota: ${c.quota_bookmaker.toFixed(2)}</div>
+                                <div style="font-size:0.75rem; color:var(--text-secondary); margin-bottom: 1rem;">
+                                    <p>Probabilità Reale Algoritmo: <strong style="color:white">${c.prob_calcolata}%</strong></p>
+                                    <p>Probabilità Stimata Bookmaker: <strong>${c.prob_bookmaker}%</strong></p>
                                 </div>
                             </div>
                             
-                            <div class="grid-2" style="align-items:center;">
-                                <div>
-                                    <div style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.3rem;">Probabilità Secondo il Bookmaker: <strong>${c.prob_bookmaker}%</strong></div>
-                                    <div style="font-size:0.85rem; color:var(--text-secondary);">Probabilità Calcolata Algoritmo: <strong style="color:white">${c.prob_calcolata}%</strong></div>
-                                </div>
-                                <div style="text-align:right">
-                                    <div style="font-size:0.8rem; font-weight:700; color:${displayColor}; text-transform:uppercase; margin-bottom:0.2rem;">${labelStatus}</div>
-                                    <div style="font-size:1.8rem; font-family:'JetBrains Mono', monospace; font-weight:900; color:${displayColor}">${c.edge > 0 ? '+' : ''}${c.edge}% EDGE</div>
-                                </div>
+                            <div style="background:var(--bg-primary); padding:1rem; border-radius:6px; border:1px solid var(--border); text-align:center;">
+                                <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:0.3rem">Offerta Sisal Migliore:</div>
+                                <div style="font-size:1.5rem; font-weight:900; color:white;">Esito ${c.segno} a <span style="color:var(--accent-blue)">${c.quota_bookmaker.toFixed(2)}</span></div>
+                                <button class="btn-bet" onclick="piazzaGiocata('${p.id}', '${p.squadra_casa} vs ${p.squadra_ospite}', '${c.segno}', ${c.quota_bookmaker})">🎯 Piazza Giocata</button>
                             </div>
                         </div>
                     `;
@@ -222,8 +250,140 @@
                 
             } catch(e) {
                 console.error(e);
-                document.getElementById('matchesContainer').innerHTML = '<div class="card text-center" style="color:var(--accent-red)">Nessun dato scanner disponibile o Errore nel caricamento delle partite. Esegui prima lo scanner!</div>';
+                document.getElementById('matchesContainer').innerHTML = '<div class="card text-center" style="grid-column: 1 / -1; color:var(--accent-red)">Nessun dato scanner disponibile.</div>';
             }
+        }
+
+        // ====== BANKROLL TRACKER (MVP LocalStorage) ======
+        
+        let bankrollChart;
+
+        function initBankroll() {
+            let scommesse = JSON.parse(localStorage.getItem('betmirato_bets') || '[]');
+            renderStorico(scommesse);
+            renderChart(scommesse);
+        }
+
+        function piazzaGiocata(id, desc, suggerimento, quota) {
+            let bet = prompt(`💸 Stai piazzando una schedina su: ${desc}\nIl software consiglia Esito ${suggerimento} @ ${quota}.\n\nChe segno vuoi giocare realmente (1, X o 2)?`, suggerimento);
+            if(!bet) return;
+            
+            let importoStr = prompt(`Quant'è il tuo Stake (es. 10 per 10€)?`, "10");
+            let importo = parseFloat(importoStr);
+            if(isNaN(importo) || importo <= 0) return;
+
+            let scommesse = JSON.parse(localStorage.getItem('betmirato_bets') || '[]');
+            scommesse.push({
+                desc,
+                segno_giocato: bet,
+                quota: quota,
+                importo: importo,
+                data: new Date().toLocaleDateString(),
+                status: 'ATTESA' // 'ATTESA', 'VINTA', 'PERSA'
+            });
+
+            localStorage.setItem('betmirato_bets', JSON.stringify(scommesse));
+            initBankroll();
+            document.getElementById('bankrollSection').scrollIntoView({behavior:'smooth'});
+            alert("Giocata salvata nel portafoglio!");
+        }
+
+        function aggiornaStatoGiocata(index, nuovoStato) {
+            let scommesse = JSON.parse(localStorage.getItem('betmirato_bets') || '[]');
+            scommesse[index].status = nuovoStato;
+            localStorage.setItem('betmirato_bets', JSON.stringify(scommesse));
+            initBankroll();
+        }
+
+        function renderStorico(scommesse) {
+            let html = '';
+            if(scommesse.length === 0) {
+                html = '<div style="color:var(--text-secondary); font-size:0.85rem">Nessuna schedina in memoria. Piazza una scommessa dalle card sopra!</div>';
+            } else {
+                [...scommesse].reverse().forEach((s, i) => {
+                    let trueIndex = scommesse.length - 1 - i;
+                    
+                    let bg = 'var(--bg-primary)';
+                    let displayStat = '';
+                    if(s.status === 'VINTA') { bg = 'rgba(46, 204, 113, 0.1)'; displayStat = '<span style="color:var(--accent-green);font-weight:bold">+ €'+((s.quota * s.importo) - s.importo).toFixed(2)+' Netto</span>'; }
+                    else if(s.status === 'PERSA') { bg = 'rgba(231, 76, 60, 0.1)'; displayStat = '<span style="color:var(--accent-red)">- €'+s.importo.toFixed(2)+'</span>'; }
+                    else {
+                        displayStat = `
+                            <button onclick="aggiornaStatoGiocata(${trueIndex}, 'VINTA')" style="background:var(--accent-green);border:none;border-radius:4px;padding:3px 8px;cursor:pointer;font-size:0.7rem;font-weight:bold">Vinta</button>
+                            <button onclick="aggiornaStatoGiocata(${trueIndex}, 'PERSA')" style="background:var(--accent-red);color:white;border:none;border-radius:4px;padding:3px 8px;cursor:pointer;font-size:0.7rem;font-weight:bold">Persa</button>
+                        `;
+                    }
+
+                    html += `
+                    <div style="background:${bg}; padding:0.8rem; border-radius:6px; font-size:0.85rem; border:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <div style="color:var(--text-secondary); font-size:0.7rem">${s.data}</div>
+                            <div style="font-weight:bold;">${s.desc}</div>
+                            <div>Segno: <strong style="color:white">${s.segno_giocato}</strong> @ <strong style="color:var(--accent-blue)">${s.quota}</strong> (Puntata: €${s.importo})</div>
+                        </div>
+                        <div style="text-align:right;">
+                            ${displayStat}
+                        </div>
+                    </div>`;
+                });
+            }
+            document.getElementById('storicoScommesse').innerHTML = html;
+        }
+
+        function renderChart(scommesse) {
+            let labels = ['Inizio'];
+            let dataPoints = [0];
+            let saldo = 0;
+
+            scommesse.forEach((s, idx) => {
+                if(s.status === 'VINTA') {
+                    saldo += ((s.quota * s.importo) - s.importo);
+                } else if(s.status === 'PERSA') {
+                    saldo -= s.importo;
+                }
+                
+                if(s.status !== 'ATTESA') {
+                    labels.push('#' + (idx+1));
+                    dataPoints.push(saldo);
+                }
+            });
+
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            
+            if(bankrollChart) {
+                bankrollChart.destroy();
+            }
+
+            bankrollChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Profitto (€)',
+                        data: dataPoints,
+                        borderColor: '#2ecc71',
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { color: '#8b98b8' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#8b98b8' }
+                        }
+                    }
+                }
+            });
         }
     </script>
 </body>
