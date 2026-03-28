@@ -6,10 +6,10 @@ import random
 
 # THE ODDS API
 # Registrati gratuitamente su: https://the-odds-api.com/ (500 richieste mese incluse)
-API_KEY = os.environ.get('ODDS_API_KEY', '')
+API_KEY = os.environ.get('ODDS_API_KEY', 'a9bf7a15ce5ac0810b051d11d35dbc72')
 
-# Campionati supportati (EU)
-SPORT_KEYS = ['soccer_italy_serie_a', 'soccer_epl', 'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_uefa_champs_league']
+# Campionati supportati
+SPORT_KEYS = ['soccer_italy_serie_a', 'soccer_epl']
 
 # ================================
 # Motore Poisson (Portato da JS)
@@ -183,20 +183,71 @@ def genera_dati_mock():
     return partite
 
 def fetch_api_odds():
-    # In futuro questa funzione chiamerà The Odds API (o simile) usando requests
-    # get(f'https://api.the-odds-api.com/v4/sports/upcoming/odds/?regions=eu&markets=h2h&apiKey={API_KEY}')
     import requests
-    return genera_dati_mock() # Per non far crashare la build finché l'utente non la abilita sulle Actions.
+    partite = []
+    
+    for sport in SPORT_KEYS:
+        url = f"https://api.the-odds-api.com/v4/sports/{sport}/odds/?apiKey={API_KEY}&regions=eu&markets=h2h"
+        try:
+            response = requests.get(url)
+            if response.status_code != 200:
+                print(f"Errore API per {sport}: {response.text}")
+                continue
+            
+            data = response.json()
+            for evento in data:
+                # Troviamo il primo bookmaker disponibile (es. unibet o betfair)
+                bookmakers = evento.get('bookmakers', [])
+                if not bookmakers: continue
+                
+                # Prendiamo le quote dal primo bookmaker disponibile per semplicità
+                mercati = bookmakers[0].get('markets', [])
+                h2h_market = next((m for m in mercati if m['key'] == 'h2h'), None)
+                if not h2h_market: continue
+                
+                outcomes = h2h_market.get('outcomes', [])
+                
+                home_team = evento.get('home_team')
+                away_team = evento.get('away_team')
+                
+                quote = {'1': 0.0, 'X': 0.0, '2': 0.0}
+                for out in outcomes:
+                    if out['name'] == home_team: quote['1'] = out['price']
+                    elif out['name'] == away_team: quote['2'] = out['price']
+                    elif out['name'].lower() == 'draw': quote['X'] = out['price']
+                
+                # Ignoriamo se mancano quote valide
+                if quote['1'] == 0.0 or quote['X'] == 0.0 or quote['2'] == 0.0: continue
+                
+                campionato_nome = "Serie A" if "serie_a" in sport else "Premier League"
+                
+                # Formattiamo la data
+                try:
+                    dt = datetime.strptime(evento['commence_time'], "%Y-%m-%dT%H:%M:%SZ")
+                    dt = dt + timedelta(hours=1) # Fuso orario ITA approssimativo
+                    data_str = dt.strftime("%Y-%m-%d %H:%M")
+                except:
+                    data_str = evento['commence_time']
+
+                partite.append({
+                    'id': evento['id'],
+                    'campionato': campionato_nome,
+                    'squadra_casa': home_team,
+                    'squadra_ospite': away_team,
+                    'data_inizio': data_str,
+                    'quote': quote
+                })
+        except Exception as e:
+            print(f"Eccezione The-Odds-API {sport}: {e}")
+            
+    # Se fallisce tutto, fallback
+    if len(partite) == 0:
+        return genera_dati_mock()
+    return partite
 
 def genera_dashboard():
-    print("Avvio Scanner BetMirato...")
-    if not API_KEY:
-        print("ATTENZIONE: Nessuna ODDS_API_KEY trovata nei Secrets. Uso dati Mock MVP.")
-        partite = genera_dati_mock()
-    else:
-        print("Scaricamento Quote da The-Odds-API in corso...")
-        # partite = fetch_api_odds()
-        partite = genera_dati_mock() # FORZATO A MOCK IN QUESTA DEMO (da sostituire appena validato)
+    print("Avvio Scanner BetMirato con The-Odds-API...")
+    partite = fetch_api_odds()
 
     analizzate = analizza_value_bets(partite)
     print(f"Analizzate {len(analizzate)} partite. Salvataggio in valuebets.json...")
