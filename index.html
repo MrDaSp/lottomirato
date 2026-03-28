@@ -293,12 +293,44 @@
 
         // ====== MOTORE DASHBOARD AUTOMATICO ======
         
+        function getMockDataDemo() {
+            return {
+                ultimo_aggiornamento: "Demo Moment",
+                partite: [
+                    {
+                        id: "demo1", campionato: "Demo A", squadra_casa: "Squadra Finta A", squadra_ospite: "Squadra Finta B", data_inizio: "Oggi 20:45",
+                        quote: { "1": 2.10, "X": 3.40, "2": 4.50 },
+                        consiglio: { segno: "1", quota_bookmaker: 2.10, prob_bookmaker: 47.6, prob_calcolata: 55.0, edge: 7.4, semaforo: "verde" }
+                    },
+                    {
+                        id: "demo2", campionato: "Demo B", squadra_casa: "Squadra X", squadra_ospite: "Squadra Y", data_inizio: "Domani 15:00",
+                        quote: { "1": 1.80, "X": 3.60, "2": 5.10 },
+                        consiglio: { segno: "1", quota_bookmaker: 1.80, prob_bookmaker: 55.5, prob_calcolata: 57.0, edge: 1.5, semaforo: "gialla" }
+                    },
+                    {
+                        id: "demo3", campionato: "Demo C", squadra_casa: "Team Alpha", squadra_ospite: "Team Beta", data_inizio: "Dopodomani 18:00",
+                        quote: { "1": 3.50, "X": 3.20, "2": 2.20 },
+                        consiglio: { segno: "X", quota_bookmaker: 3.20, prob_bookmaker: 31.2, prob_calcolata: 25.0, edge: -6.2, semaforo: "rossa" }
+                    }
+                ]
+            };
+        }
+
         async function caricaDashboard() {
             try {
-                const response = await fetch('valuebets.json?t=' + new Date().getTime()); // Evita cache
-                const data = await response.json();
+                let data;
                 
-                document.getElementById('lastUpdate').textContent = `Ultimo aggiornamento scanner: ${data.ultimo_aggiornamento}`;
+                if (!currentUser) {
+                    // Modalità Ospite: Dati finti
+                    data = getMockDataDemo();
+                    document.getElementById('lastUpdate').innerHTML = "<span style='color:var(--accent-red); font-weight:bold;'>MODELLO DEMO (Dati Falsati)</span> - Registrati per sbloccare i dati mondiali reali di The-Odds-API.";
+                } else {
+                    // Modalità Iscritto: Dati Reali
+                    const response = await fetch('valuebets.json?t=' + new Date().getTime()); // Evita cache
+                    data = await response.json();
+                    document.getElementById('lastUpdate').innerHTML = `Ultimo aggiornamento scanner reale: <span style="color:var(--accent-green);font-weight:bold;">${data.ultimo_aggiornamento}</span>`;
+                }
+
                 
                 let htmlVerdi = '<h4 style="text-align:center; color:var(--accent-green); border-bottom:2px solid var(--accent-green); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟢 VANTAGGIO ALTO</h4>';
                 let htmlGialli = '<h4 style="text-align:center; color:var(--accent-yellow); border-bottom:2px solid var(--accent-yellow); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟡 MARGINE LIEVE</h4>';
