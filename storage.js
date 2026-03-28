@@ -1,6 +1,6 @@
 // LottoMirato - Supabase Storage Layer
 const SUPABASE_URL = 'https://kvwomwmnfrfohewadesg.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2d29td21uZnJmb2hld2FkZXNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDMyNDU5OTksImV4cCI6MjA1ODgyMTk5OX0.eay6_51-Y6D8xZl06vY57lJmJ772-L68uE6l5E2Fv_Y';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt2d29td21uZnJmb2hld2FkZXNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2ODM1MDAsImV4cCI6MjA5MDI1OTUwMH0.26BXmGc3HMAmUO47FOYSk6EM6_t4j2qViLyoi1W8_S8';
 const STORICO_URL = 'https://raw.githubusercontent.com/MrDaSp/lottomirato/main/storico01-oggi.txt';
 
 let sbClient;
