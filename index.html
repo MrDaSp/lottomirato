@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LottoMirato â€“ Dashboard Strategica</title>
+    <title>LottoMirato – Dashboard Strategica</title>
     <meta name="description" content="Analisi ritardi del Lotto italiano. Strategia disciplinata basata sui dati storici.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -357,7 +357,7 @@
 <div class="auth-overlay" id="authOverlay">
     <div class="auth-box">
         <div class="auth-logo">
-            <h1>ðŸŽ¯ LottoMirato</h1>
+            <h1>🎯 LottoMirato</h1>
             <p>Analisi strategica basata sui ritardi</p>
         </div>
         <div class="auth-tabs">
@@ -406,16 +406,16 @@
 <div class="wizard-overlay hidden" id="wizardOverlay">
     <div class="wizard-container">
         <div class="wizard-header">
-            <div class="wizard-step">Passo 1 di 2 â€“ Configurazione Strategia</div>
-            <h1>ðŸ§  Analizziamo i ritardi per te</h1>
-            <p>Abbiamo analizzato <strong id="wizTotEstr">â€“</strong> estrazioni dal 2001 ad oggi. Ecco i numeri con le situazioni piu' anomale sulle ruote. <strong>Seleziona da 1 a 3 ruote</strong> per la tua strategia.</p>
+            <div class="wizard-step">Passo 1 di 2 – Configurazione Strategia</div>
+            <h1>🧠 Analizziamo i ritardi per te</h1>
+            <p>Abbiamo analizzato <strong id="wizTotEstr">–</strong> estrazioni dal 2001 ad oggi. Ecco i numeri con le situazioni piu' anomale sulle ruote. <strong>Seleziona da 1 a 3 ruote</strong> per la tua strategia.</p>
         </div>
         <div class="wizard-cards" id="wizardCards"></div>
 
-        <div class="wizard-step" style="text-align:center">Passo 2 di 2 â€“ Imposta il piano</div>
+        <div class="wizard-step" style="text-align:center">Passo 2 di 2 – Imposta il piano</div>
         <div class="wizard-settings">
             <div class="form-group">
-                <label>â‚¬ per estrazione</label>
+                <label>€ per estrazione</label>
                 <input class="form-input" id="wizBudget" type="number" value="6" min="1" max="100">
             </div>
             <div class="form-group">
@@ -425,7 +425,7 @@
         </div>
         <div class="wizard-confirm-area">
             <button class="btn btn-primary" onclick="confirmWizard()" style="padding:.8rem 2rem;font-size:1rem">
-                âœ… Conferma e inizia
+                ✅ Conferma e inizia
             </button>
             <p style="color:var(--text-muted);font-size:.75rem;margin-top:.8rem;">Potrai sempre modificare la strategia dopo</p>
         </div>
@@ -435,14 +435,14 @@
 <!-- ===== HEADER ===== -->
 <header class="header" id="appHeader" style="display:none">
     <div class="header-left">
-        <div><div class="logo">ðŸŽ¯ LottoMirato</div><div class="logo-sub">Dashboard Strategica</div></div>
+        <div><div class="logo">🎯 LottoMirato</div><div class="logo-sub">Dashboard Strategica</div></div>
     </div>
     <div class="header-actions">
-        <span class="last-update" id="lastUpdate">â€“</span>
-        <span class="user-info" id="userInfo">â€“</span>
-        <button class="btn btn-sm" id="btnRefresh" onclick="caricaDati()"><span class="spinner"></span><span class="btn-text">ðŸ”„ Aggiorna</span></button>
-        <button class="btn btn-primary btn-sm" id="btnDownload" onclick="scaricaEAnalizza()"><span class="spinner"></span><span class="btn-text">ðŸ“¥ Scarica + Analizza</span></button>
-        <button class="btn btn-sm" onclick="openWizardEdit()">âš™️</button>
+        <span class="last-update" id="lastUpdate">–</span>
+        <span class="user-info" id="userInfo">–</span>
+        <button class="btn btn-sm" id="btnRefresh" onclick="caricaDati()"><span class="spinner"></span><span class="btn-text">🔄 Aggiorna</span></button>
+        <button class="btn btn-primary btn-sm" id="btnDownload" onclick="scaricaEAnalizza()"><span class="spinner"></span><span class="btn-text">📥 Scarica + Analizza</span></button>
+        <button class="btn btn-sm" onclick="openWizardEdit()">⚙️</button>
         <button class="btn btn-sm btn-danger" onclick="doLogout()">Esci</button>
     </div>
 </header>
@@ -459,12 +459,12 @@
     <div class="giocata-card" id="giocataCard"></div>
     <div class="grid-3" id="ruoteGrid"></div>
     <div class="grid-2">
-        <div class="card"><div class="card-header"><div class="card-title">ðŸ’° Piano Economico</div></div><div class="card-body" id="budgetBody">
+        <div class="card"><div class="card-header"><div class="card-title">💰 Piano Economico</div></div><div class="card-body" id="budgetBody">
             <div class="budget-bar"><div class="budget-bar-fill" id="budgetBarFill" style="width:10%"></div></div>
             <div class="budget-labels"><span id="budgetSpeso">â€“</span><span id="budgetTotale">â€“</span></div>
             <div style="margin-top:1rem"><table class="extraction-table"><thead><tr><th>#</th><th>Data</th><th>Giocata?</th><th>Esito</th></tr></thead><tbody id="pianoBody"></tbody></table></div>
         </div></div>
-        <div class="card"><div class="card-header"><div class="card-title">ðŸ“‹ Ultime Estrazioni</div></div><div class="card-body-scroll" style="max-height:420px">
+        <div class="card"><div class="card-header"><div class="card-title">📋 Ultime Estrazioni</div></div><div class="card-body-scroll" style="max-height:420px">
             <table class="extraction-table"><thead><tr><th>Data</th><th>Ruota</th><th>Numeri</th><th></th></tr></thead><tbody id="estrazioniTbody"></tbody></table>
         </div></div>
     </div>
