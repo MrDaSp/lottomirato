@@ -108,7 +108,7 @@
             <span id="userInfo" style="margin-right:1rem; font-size:0.9rem;"></span>
             <button class="btn-logout" onclick="handleLogout()">Esci</button>
         </div>
-    </heade    <!-- MAIN DASHBOARD AUTOMATICA -->
+    </header>    <!-- MAIN DASHBOARD AUTOMATICA -->
     <main class="main" id="mainDash">
         <div class="card" style="text-align:center; padding: 1.5rem;">
             <h2>Cruscotto Scanner Value Bet 🤖</h2>
@@ -120,10 +120,20 @@
             <button onclick="document.getElementById('bankrollSection').scrollIntoView({behavior:'smooth'})" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue); padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Vai a Il Mio Bankroll 📈</button>
         </div>
 
-        <!-- GRIGLIA A 3 COLONNE -->
-        <div id="matchesContainer" class="grid-responsive">
-            <!-- Le partite verranno caricate dinamicamente qui dal JSON -->
-            <div class="text-center" style="color:var(--text-secondary); padding: 2rem; grid-column: 1 / -1;">⏳ In attesa del server scanner...</div>
+        <!-- GRIGLIA KANBAN A 3 COLONNE (Verde, Giallo, Rosso) -->
+        <div class="grid-3" id="matchesContainer" style="align-items: start;">
+            <!-- Colonne vuote per pre-struttura -->
+            <div id="colVerdi" style="display:flex; flex-direction:column; gap:1.5rem;">
+                <h4 style="text-align:center; color:var(--accent-green); border-bottom:2px solid var(--accent-green); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟢 VANTAGGIO ALTO</h4>
+            </div>
+            
+            <div id="colGialli" style="display:flex; flex-direction:column; gap:1.5rem;">
+                <h4 style="text-align:center; color:var(--accent-yellow); border-bottom:2px solid var(--accent-yellow); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟡 MARGINE LIEVE</h4>
+            </div>
+            
+            <div id="colRossi" style="display:flex; flex-direction:column; gap:1.5rem;">
+                <h4 style="text-align:center; color:var(--accent-red); border-bottom:2px solid var(--accent-red); padding-bottom:0.5rem; margin-bottom:0.5rem;">🔴 TRAPPOLE</h4>
+            </div>
         </div>
 
         <!-- SEZIONE BANKROLL (IL MIO PORTAFOGLIO) -->
@@ -207,18 +217,21 @@
                 
                 document.getElementById('lastUpdate').textContent = `Ultimo aggiornamento scanner: ${data.ultimo_aggiornamento}`;
                 
-                let html = '';
+                let htmlVerdi = '<h4 style="text-align:center; color:var(--accent-green); border-bottom:2px solid var(--accent-green); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟢 VANTAGGIO ALTO</h4>';
+                let htmlGialli = '<h4 style="text-align:center; color:var(--accent-yellow); border-bottom:2px solid var(--accent-yellow); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟡 MARGINE LIEVE</h4>';
+                let htmlRossi = '<h4 style="text-align:center; color:var(--accent-red); border-bottom:2px solid var(--accent-red); padding-bottom:0.5rem; margin-bottom:0.5rem;">🔴 TRAPPOLE</h4>';
+                
                 data.partite.forEach(p => {
                     let c = p.consiglio;
                     let displayColor = 'gray';
                     let bg = 'var(--bg-card)';
                     let labelStatus = "DA EVITARE";
                     
-                    if(c.semaforo === 'verde') { displayColor = 'var(--accent-green)'; bg = 'rgba(46, 204, 113, 0.1)'; labelStatus = 'VANTAGGIO ALTO (GIOCA)'; }
+                    if(c.semaforo === 'verde') { displayColor = 'var(--accent-green)'; bg = 'rgba(46, 204, 113, 0.1)'; labelStatus = 'VANTAGGIO ALTO'; }
                     if(c.semaforo === 'gialla') { displayColor = 'var(--accent-yellow)'; bg = 'rgba(241, 196, 15, 0.1)'; labelStatus = 'MARGINE LIEVE'; }
-                    if(c.semaforo === 'rossa') { displayColor = 'var(--accent-red)'; labelStatus = 'TRAPPOLA (NON GIOCARE)'; }
+                    if(c.semaforo === 'rossa') { displayColor = 'var(--accent-red)'; labelStatus = 'TRAPPOLA'; }
                     
-                    html += `
+                    let cardHtml = `
                         <div class="card" style="border-top: 5px solid ${displayColor}; background: ${bg}; margin-bottom: 0; display:flex; flex-direction:column; justify-content:space-between;">
                             <div>
                                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:0.8rem; margin-bottom:1rem;">
@@ -244,9 +257,15 @@
                             </div>
                         </div>
                     `;
+                    
+                    if(c.semaforo === 'verde') htmlVerdi += cardHtml;
+                    else if(c.semaforo === 'gialla') htmlGialli += cardHtml;
+                    else htmlRossi += cardHtml;
                 });
                 
-                document.getElementById('matchesContainer').innerHTML = html;
+                document.getElementById('colVerdi').innerHTML = htmlVerdi;
+                document.getElementById('colGialli').innerHTML = htmlGialli;
+                document.getElementById('colRossi').innerHTML = htmlRossi;
                 
             } catch(e) {
                 console.error(e);
