@@ -1,5 +1,5 @@
 {
-    "ultimo_aggiornamento": "2026-03-29 08:40:37",
+    "ultimo_aggiornamento": "2026-03-29 09:26:54",
     "versione_scanner": "2.0",
     "fonti_dati": {
         "quote": "The-Odds-API",
@@ -18,6 +18,7 @@
                 "X": 3.88,
                 "2": 2.76
             },
+            "bookmaker": "1xBet",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -28,7 +29,8 @@
                 "prob_calcolata": 31.9,
                 "edge": 6.1,
                 "edge_grezzo": 6.1,
-                "semaforo": "verde"
+                "semaforo": "verde",
+                "bookmaker": "1xBet"
             }
         },
         {
@@ -42,6 +44,7 @@
                 "X": 3.88,
                 "2": 3.38
             },
+            "bookmaker": "1xBet",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -52,7 +55,8 @@
                 "prob_calcolata": 30.9,
                 "edge": 5.2,
                 "edge_grezzo": 5.2,
-                "semaforo": "verde"
+                "semaforo": "verde",
+                "bookmaker": "1xBet"
             }
         },
         {
@@ -66,6 +70,7 @@
                 "X": 4.12,
                 "2": 3.96
             },
+            "bookmaker": "1xBet",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -76,7 +81,8 @@
                 "prob_calcolata": 29.0,
                 "edge": 4.8,
                 "edge_grezzo": 4.8,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "1xBet"
             }
         },
         {
@@ -90,6 +96,7 @@
                 "X": 3.04,
                 "2": 4.6
             },
+            "bookmaker": "Pinnacle",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -100,7 +107,8 @@
                 "prob_calcolata": 53.3,
                 "edge": 3.8,
                 "edge_grezzo": 3.8,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Pinnacle"
             }
         },
         {
@@ -114,6 +122,7 @@
                 "X": 3.85,
                 "2": 2.1
             },
+            "bookmaker": "Winamax (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -124,7 +133,8 @@
                 "prob_calcolata": 29.6,
                 "edge": 3.7,
                 "edge_grezzo": 3.7,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Winamax (FR)"
             }
         },
         {
@@ -138,6 +148,7 @@
                 "X": 3.43,
                 "2": 4.98
             },
+            "bookmaker": "Pinnacle",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -148,7 +159,8 @@
                 "prob_calcolata": 58.3,
                 "edge": 3.4,
                 "edge_grezzo": 3.4,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Pinnacle"
             }
         },
         {
@@ -162,6 +174,7 @@
                 "X": 3.5,
                 "2": 2.7
             },
+            "bookmaker": "LeoVegas (SE)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -172,7 +185,8 @@
                 "prob_calcolata": 31.9,
                 "edge": 3.4,
                 "edge_grezzo": 3.4,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "LeoVegas (SE)"
             }
         },
         {
@@ -186,6 +200,7 @@
                 "X": 3.48,
                 "2": 3.4
             },
+            "bookmaker": "1xBet",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -196,7 +211,8 @@
                 "prob_calcolata": 32.0,
                 "edge": 3.2,
                 "edge_grezzo": 3.2,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "1xBet"
             }
         },
         {
@@ -210,6 +226,7 @@
                 "X": 4.11,
                 "2": 5.28
             },
+            "bookmaker": "1xBet",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -220,7 +237,8 @@
                 "prob_calcolata": 61.2,
                 "edge": 3.1,
                 "edge_grezzo": 3.1,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "1xBet"
             }
         },
         {
@@ -234,6 +252,7 @@
                 "X": 3.75,
                 "2": 1.78
             },
+            "bookmaker": "Unibet (NL)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -244,7 +263,8 @@
                 "prob_calcolata": 59.2,
                 "edge": 3.0,
                 "edge_grezzo": 3.0,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Unibet (NL)"
             }
         },
         {
@@ -258,6 +278,7 @@
                 "X": 3.45,
                 "2": 2.48
             },
+            "bookmaker": "LeoVegas (SE)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -268,7 +289,8 @@
                 "prob_calcolata": 31.9,
                 "edge": 2.9,
                 "edge_grezzo": 2.9,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "LeoVegas (SE)"
             }
         },
         {
@@ -282,6 +304,7 @@
                 "X": 3.84,
                 "2": 4.47
             },
+            "bookmaker": "1xBet",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -292,7 +315,8 @@
                 "prob_calcolata": 28.6,
                 "edge": 2.6,
                 "edge_grezzo": 2.6,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "1xBet"
             }
         },
         {
@@ -306,6 +330,7 @@
                 "X": 3.85,
                 "2": 5.63
             },
+            "bookmaker": "Pinnacle",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -316,7 +341,8 @@
                 "prob_calcolata": 64.3,
                 "edge": 2.6,
                 "edge_grezzo": 2.6,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Pinnacle"
             }
         },
         {
@@ -330,6 +356,7 @@
                 "X": 3.46,
                 "2": 3.13
             },
+            "bookmaker": "Pinnacle",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -340,7 +367,8 @@
                 "prob_calcolata": 31.2,
                 "edge": 2.3,
                 "edge_grezzo": 2.3,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Pinnacle"
             }
         },
         {
@@ -354,6 +382,7 @@
                 "X": 2.91,
                 "2": 3.87
             },
+            "bookmaker": "Pinnacle",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -364,7 +393,8 @@
                 "prob_calcolata": 46.9,
                 "edge": 2.0,
                 "edge_grezzo": 2.0,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Pinnacle"
             }
         },
         {
@@ -378,6 +408,7 @@
                 "X": 4.21,
                 "2": 6.32
             },
+            "bookmaker": "Pinnacle",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -388,7 +419,8 @@
                 "prob_calcolata": 68.2,
                 "edge": 1.9,
                 "edge_grezzo": 1.9,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Pinnacle"
             }
         },
         {
@@ -402,6 +434,7 @@
                 "X": 3.5,
                 "2": 5.0
             },
+            "bookmaker": "888sport",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -412,7 +445,8 @@
                 "prob_calcolata": 61.5,
                 "edge": 1.7,
                 "edge_grezzo": 1.7,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "888sport"
             }
         },
         {
@@ -426,6 +460,7 @@
                 "X": 3.49,
                 "2": 1.94
             },
+            "bookmaker": "Pinnacle",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -436,7 +471,8 @@
                 "prob_calcolata": 53.2,
                 "edge": 1.6,
                 "edge_grezzo": 1.6,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Pinnacle"
             }
         },
         {
@@ -450,6 +486,7 @@
                 "X": 4.5,
                 "2": 4.8
             },
+            "bookmaker": "Winamax (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -460,7 +497,8 @@
                 "prob_calcolata": 23.6,
                 "edge": 1.4,
                 "edge_grezzo": 1.4,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Winamax (FR)"
             }
         },
         {
@@ -474,6 +512,7 @@
                 "X": 3.35,
                 "2": 3.45
             },
+            "bookmaker": "Betsson",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -484,7 +523,8 @@
                 "prob_calcolata": 31.1,
                 "edge": 1.2,
                 "edge_grezzo": 1.2,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Betsson"
             }
         },
         {
@@ -498,6 +538,7 @@
                 "X": 3.35,
                 "2": 2.55
             },
+            "bookmaker": "Winamax (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -508,7 +549,8 @@
                 "prob_calcolata": 31.0,
                 "edge": 1.2,
                 "edge_grezzo": 1.2,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Winamax (FR)"
             }
         },
         {
@@ -522,6 +564,7 @@
                 "X": 3.7,
                 "2": 1.6
             },
+            "bookmaker": "Winamax (DE)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -532,7 +575,8 @@
                 "prob_calcolata": 63.4,
                 "edge": 0.9,
                 "edge_grezzo": 0.9,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Winamax (DE)"
             }
         },
         {
@@ -546,6 +590,7 @@
                 "X": 3.4,
                 "2": 2.15
             },
+            "bookmaker": "Winamax (DE)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -556,7 +601,8 @@
                 "prob_calcolata": 30.2,
                 "edge": 0.8,
                 "edge_grezzo": 0.8,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Winamax (DE)"
             }
         },
         {
@@ -570,6 +616,7 @@
                 "X": 3.9,
                 "2": 1.7
             },
+            "bookmaker": "Winamax (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -580,7 +627,8 @@
                 "prob_calcolata": 26.5,
                 "edge": 0.8,
                 "edge_grezzo": 0.8,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Winamax (FR)"
             }
         },
         {
@@ -594,6 +642,7 @@
                 "X": 4.97,
                 "2": 8.89
             },
+            "bookmaker": "Pinnacle",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -604,7 +653,8 @@
                 "prob_calcolata": 75.3,
                 "edge": 0.7,
                 "edge_grezzo": 0.7,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Pinnacle"
             }
         },
         {
@@ -618,6 +668,7 @@
                 "X": 3.3,
                 "2": 2.2
             },
+            "bookmaker": "888sport",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -628,7 +679,8 @@
                 "prob_calcolata": 30.6,
                 "edge": 0.3,
                 "edge_grezzo": 0.3,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "888sport"
             }
         },
         {
@@ -642,6 +694,7 @@
                 "X": 3.2,
                 "2": 4.0
             },
+            "bookmaker": "William Hill",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -652,7 +705,8 @@
                 "prob_calcolata": 54.2,
                 "edge": 0.2,
                 "edge_grezzo": 0.2,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "William Hill"
             }
         },
         {
@@ -666,6 +720,7 @@
                 "X": 3.35,
                 "2": 3.1
             },
+            "bookmaker": "Winamax (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -676,7 +731,8 @@
                 "prob_calcolata": 30.1,
                 "edge": 0.2,
                 "edge_grezzo": 0.2,
-                "semaforo": "gialla"
+                "semaforo": "gialla",
+                "bookmaker": "Winamax (FR)"
             }
         },
         {
@@ -690,6 +746,7 @@
                 "X": 3.4,
                 "2": 2.0
             },
+            "bookmaker": "Winamax (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -700,7 +757,8 @@
                 "prob_calcolata": 29.3,
                 "edge": -0.1,
                 "edge_grezzo": -0.1,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "Winamax (FR)"
             }
         },
         {
@@ -714,6 +772,7 @@
                 "X": 3.5,
                 "2": 1.61
             },
+            "bookmaker": "Parions Sport (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -724,7 +783,8 @@
                 "prob_calcolata": 62.0,
                 "edge": -0.2,
                 "edge_grezzo": -0.2,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "Parions Sport (FR)"
             }
         },
         {
@@ -738,6 +798,7 @@
                 "X": 2.87,
                 "2": 2.74
             },
+            "bookmaker": "Pinnacle",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -748,7 +809,8 @@
                 "prob_calcolata": 36.0,
                 "edge": -0.5,
                 "edge_grezzo": -0.5,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "Pinnacle"
             }
         },
         {
@@ -762,6 +824,7 @@
                 "X": 3.1,
                 "2": 3.4
             },
+            "bookmaker": "William Hill",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -772,7 +835,8 @@
                 "prob_calcolata": 45.8,
                 "edge": -0.7,
                 "edge_grezzo": -0.7,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "William Hill"
             }
         },
         {
@@ -786,6 +850,7 @@
                 "X": 3.6,
                 "2": 5.0
             },
+            "bookmaker": "PMU (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -796,7 +861,8 @@
                 "prob_calcolata": 64.9,
                 "edge": -0.8,
                 "edge_grezzo": -0.8,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "PMU (FR)"
             }
         },
         {
@@ -810,6 +876,7 @@
                 "X": 4.6,
                 "2": 7.0
             },
+            "bookmaker": "William Hill",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -820,7 +887,8 @@
                 "prob_calcolata": 72.7,
                 "edge": -0.8,
                 "edge_grezzo": -0.8,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "William Hill"
             }
         },
         {
@@ -834,6 +902,7 @@
                 "X": 4.8,
                 "2": 7.5
             },
+            "bookmaker": "Winamax (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -844,7 +913,8 @@
                 "prob_calcolata": 73.8,
                 "edge": -0.8,
                 "edge_grezzo": -0.8,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "Winamax (FR)"
             }
         },
         {
@@ -858,6 +928,7 @@
                 "X": 3.8,
                 "2": 4.8
             },
+            "bookmaker": "Parions Sport (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -868,7 +939,8 @@
                 "prob_calcolata": 64.3,
                 "edge": -1.4,
                 "edge_grezzo": -1.4,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "Parions Sport (FR)"
             }
         },
         {
@@ -882,6 +954,7 @@
                 "X": 3.2,
                 "2": 3.2
             },
+            "bookmaker": "Parions Sport (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -892,7 +965,8 @@
                 "prob_calcolata": 29.2,
                 "edge": -2.0,
                 "edge_grezzo": -2.0,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "Parions Sport (FR)"
             }
         },
         {
@@ -906,6 +980,7 @@
                 "X": 3.25,
                 "2": 1.9
             },
+            "bookmaker": "PMU (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -916,7 +991,8 @@
                 "prob_calcolata": 28.6,
                 "edge": -2.2,
                 "edge_grezzo": -2.2,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "PMU (FR)"
             }
         },
         {
@@ -930,6 +1006,7 @@
                 "X": 4.2,
                 "2": 8.0
             },
+            "bookmaker": "PMU (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -940,7 +1017,8 @@
                 "prob_calcolata": 75.7,
                 "edge": -2.4,
                 "edge_grezzo": -2.4,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "PMU (FR)"
             }
         },
         {
@@ -954,6 +1032,7 @@
                 "X": 2.95,
                 "2": 2.7
             },
+            "bookmaker": "PMU (FR)",
             "stats": {},
             "modificatori": [],
             "dati_verificati": false,
@@ -964,7 +1043,8 @@
                 "prob_calcolata": 30.8,
                 "edge": -3.1,
                 "edge_grezzo": -3.1,
-                "semaforo": "rossa"
+                "semaforo": "rossa",
+                "bookmaker": "PMU (FR)"
             }
         }
     ]
