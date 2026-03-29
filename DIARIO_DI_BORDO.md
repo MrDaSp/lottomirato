@@ -664,8 +664,12 @@ Per garantire che ogni nuovo utente legga la guida completa (glossario, signific
 
 ---
 
-### 📝 Prossimi Passi (Da Fare)
-1. **Registrazione API-Football:** Creare account gratuito su https://www.api-football.com/ e salvare la chiave come GitHub Secret `FOOTBALL_API_KEY`
-2. **Test con Dati Reali:** Una volta configurata la chiave, eseguire lo scanner e verificare che i modificatori appaiano nelle card
-3. **Push su GitHub:** Committare tutto il codice v2 e verificare che il workflow Actions funzioni
-4. **Modificatore Manuale (Futuro):** Opzionalmente, aggiungere un campo per "Peso Notizie" manuale nelle card, per quando l'utente sa qualcosa che l'API non sa (es. allenatore esonerato stamattina)
+### 📝 Completamento e Collaudo (29 Marzo 2026)
+1. **[X] Registrazione API-Football:** La chiave è stata inserita e testata sul branch principale.
+2. **[X] Test con Dati Reali:** Le percentuali di `Edge` generate restituiscono profitti sensati e limitati (+1% / +8%), sancendo l'addio ai risultati pilotati/casuali.
+3. **[X] Modifiche Fallback e Mock:** Risolto bug sul fallback della variabile `ODDS_API_KEY` che causava la generazione involontaria da parte di GitHub di falsi match (il famoso "Bologna-Como 14:17"). Adesso lo script gestisce dinamicamente sia `None` che stringhe vuote.
+4. **[X] Push su GitHub:** CI/CD attiva e stabile (GitHub Actions ruota *cron* alle 10 e alle 17 senza intoppi).
+
+### 🚀 Futuro: Espansioni
+- **Campionati Europei:** Estendere `LEAGUES` su Python (`scanner.py`) inserendo Premier League, LaLiga, e Bundesliga.
+- **Bot Telegram Intelligente:** Far inviare allo scanner V2 i match marcati come "Vantaggio Alto" (Semaforo Verde) direttamente via Telegram all'amministratore.
