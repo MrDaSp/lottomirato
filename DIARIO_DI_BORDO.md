@@ -704,6 +704,50 @@ Sostituito il calcolo in € (troppo variabile) con il sistema a **Unità Fisse 
 
 ---
 
+### 🎯 Upgrade UX Bankroll v3.1 (29 Marzo 2026)
+
+#### Problemi Riscontrati dall'Utente
+1. **`prompt()` nativo del browser:** Quando si piazzava una giocata, il browser mostrava un dialog con l'intestazione "mrdasp.github.io dice" — impossibile da rimuovere perché imposta dal browser stesso. Inoltre chiedeva solo il segno (1/X/2) senza dare la possibilità di specificare l'importo in €.
+2. **Nessun modo di eliminare una giocata:** Una volta piazzata, una scommessa restava nel grafico per sempre.
+3. **Nessun modo di modificare una giocata:** Se la quota cambiava nel frattempo, i risultati non erano attendibili perché non si poteva aggiornare.
+4. **Calcolo in Unità (U) invece che in Euro (€):** L'utente puntava importi diversi ma il sistema contava sempre 1U fissa.
+
+#### Soluzioni Implementate
+
+##### 1. Modale Custom "Piazza Giocata" (Addio `prompt()`)
+- Sostituito il `prompt()` nativo con un **modale HTML in-app** con animazione slide-up e backdrop blur.
+- Il modale chiede due cose:
+  - **Risultato** (1, X, 2) con pulsanti selezionabili visivamente (il suggerimento dell'algoritmo è pre-selezionato).
+  - **Importo in €** con input numerico (default 1€, step 0.50€). L'utente decide liberamente quanto vuole puntare.
+- **Preview della posta in gioco** calcolata live: mostra "Posta in gioco: X€ · Profitto netto: +Y€" aggiornato in tempo reale mentre si digita.
+- Pulsante X di chiusura e pulsante "Annulla" per uscire senza salvare.
+
+##### 2. Bottone ✕ per Eliminare Giocate
+- Ogni scommessa nello Storico ora ha un bottone **✕** che la elimina dal database Supabase dopo conferma.
+- Funziona sia su giocate pending che su giocate già concluse (vinte/perse).
+- Il grafico si aggiorna automaticamente dopo l'eliminazione.
+
+##### 3. Bottone ✏️ per Modificare Giocate
+- Le giocate **pending** (non ancora concluse) mostrano anche un bottone **✏️ Modifica**.
+- Cliccandolo si riapre lo stesso modale in modalità Edit, precompilato con i dati attuali.
+- L'utente può cambiare segno, quota e importo. Salva con "💾 Salva Modifiche".
+
+##### 4. Profitto/Perdita in Euro (€) Reali
+- Il calcolo del profitto ora considera lo **stake reale** dell'utente:
+  - **Vinta:** +stake × (quota - 1) → es. 2€ su quota 1.67 = +1.34€
+  - **Persa:** -stake → es. -2.00€
+- Il grafico "Andamento Profitto" ora mostra l'asse in € invece che in Unità.
+- Nello storico, ogni giocata mostra l'importo puntato accanto alla quota.
+
+#### ⚠️ Migrazione Database Necessaria (Supabase)
+Per supportare l'importo personalizzato, è necessario aggiungere la colonna `stake` alla tabella `user_bets`:
+```sql
+ALTER TABLE user_bets ADD COLUMN stake REAL DEFAULT 1;
+```
+Il codice gestisce il fallback: se `stake` è `null` (vecchie giocate), usa 1€ come default.
+
+---
+
 ### 🚀 Prossimo Step (FASE 4 - IN CORSO):
 #### 🤖 Telegram Alert Bot "Segugio di Quote"
 L'obiettivo è ricevere notifiche push istantanee per non perdere mai una Value Bet.
