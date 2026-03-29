@@ -20,8 +20,8 @@ from datetime import datetime, timedelta
 # CONFIGURAZIONE
 # ==========================================
 
-ODDS_API_KEY = os.environ.get('ODDS_API_KEY', 'a9bf7a15ce5ac0810b051d11d35dbc72')
-FOOTBALL_API_KEY = os.environ.get('FOOTBALL_API_KEY', '')
+ODDS_API_KEY = os.environ.get('ODDS_API_KEY') or 'a9bf7a15ce5ac0810b051d11d35dbc72'
+FOOTBALL_API_KEY = os.environ.get('FOOTBALL_API_KEY') or ''
 
 FOOTBALL_API_BASE = 'https://v3.football.api-sports.io'
 FOOTBALL_HEADERS = {'x-apisports-key': FOOTBALL_API_KEY}
