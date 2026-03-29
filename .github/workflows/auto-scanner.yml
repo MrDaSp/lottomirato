@@ -2,8 +2,8 @@ name: BetMirato Auto Scanner v2
 
 on:
   schedule:
-    # Esegue alle 6:00, 12:00, 18:00 ora italiana (4:00, 10:00, 16:00 UTC)
-    - cron: '0 4,10,16 * * *'
+    # Esegue alle 10:00 e 17:00 ora italiana (8:00 e 15:00 UTC) per intercettare gli infortuni last-minute
+    - cron: '0 8,15 * * *'
   workflow_dispatch:
 
 jobs:

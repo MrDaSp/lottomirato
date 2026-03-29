@@ -288,10 +288,10 @@ def analizza(partite):
     all_fix = {}
     for sk, li in LEAGUES.items():
         if FOOTBALL_API_KEY:
-            print(f"  📡 Fixtures {li['name']}...")
+            print(f"  [GET] Fixtures {li['name']}...")
             fx = get_fixtures(li['id'], li['season'])
             all_fix[sk] = fx
-            print(f"     → {len(fx)} trovate")
+            print(f"     -> {len(fx)} trovate")
         else:
             all_fix[sk] = []
 
