@@ -411,95 +411,92 @@
         }
 
         function renderMatches(partite) {
-                let htmlVerdi = '<h4 style="text-align:center; color:var(--accent-green); border-bottom:2px solid var(--accent-green); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟢 VANTAGGIO ALTO</h4>';
-                let htmlGialli = '<h4 style="text-align:center; color:var(--accent-yellow); border-bottom:2px solid var(--accent-yellow); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟡 MARGINE LIEVE</h4>';
-                let htmlRossi = '<h4 style="text-align:center; color:var(--accent-red); border-bottom:2px solid var(--accent-red); padding-bottom:0.5rem; margin-bottom:0.5rem;">🔴 TRAPPOLE</h4>';
+            let htmlVerdi = '<h4 style="text-align:center; color:var(--accent-green); border-bottom:2px solid var(--accent-green); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟢 VANTAGGIO ALTO</h4>';
+            let htmlGialli = '<h4 style="text-align:center; color:var(--accent-yellow); border-bottom:2px solid var(--accent-yellow); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟡 MARGINE LIEVE</h4>';
+            let htmlRossi = '<h4 style="text-align:center; color:var(--accent-red); border-bottom:2px solid var(--accent-red); padding-bottom:0.5rem; margin-bottom:0.5rem;">🔴 TRAPPOLE</h4>';
+            
+            // Ordina cronologicamente
+            partite.sort((a, b) => new Date(a.data_inizio.replace(' ', 'T')) - new Date(b.data_inizio.replace(' ', 'T')));
+            
+            partite.forEach(p => {
+                let c = p.consiglio;
+                let displayColor = 'gray';
+                let bg = 'var(--bg-card)';
+                let labelStatus = "DA EVITARE";
                 
-                // Ordina cronologicamente
-                partite.sort((a, b) => new Date(a.data_inizio.replace(' ', 'T')) - new Date(b.data_inizio.replace(' ', 'T')));
+                if(c.semaforo === 'verde') { displayColor = 'var(--accent-green)'; bg = 'rgba(46, 204, 113, 0.1)'; labelStatus = 'VANTAGGIO ALTO'; }
+                if(c.semaforo === 'gialla') { displayColor = 'var(--accent-yellow)'; bg = 'rgba(241, 196, 15, 0.1)'; labelStatus = 'MARGINE LIEVE'; }
+                if(c.semaforo === 'rossa') { displayColor = 'var(--accent-red)'; labelStatus = 'TRAPPOLA'; }
                 
-                partite.forEach(p => {
-                    let c = p.consiglio;
-                    let displayColor = 'gray';
-                    let bg = 'var(--bg-card)';
-                    let labelStatus = "DA EVITARE";
-                    
-                    if(c.semaforo === 'verde') { displayColor = 'var(--accent-green)'; bg = 'rgba(46, 204, 113, 0.1)'; labelStatus = 'VANTAGGIO ALTO'; }
-                    if(c.semaforo === 'gialla') { displayColor = 'var(--accent-yellow)'; bg = 'rgba(241, 196, 15, 0.1)'; labelStatus = 'MARGINE LIEVE'; }
-                    if(c.semaforo === 'rossa') { displayColor = 'var(--accent-red)'; labelStatus = 'TRAPPOLA'; }
-                    
-                    // Badge modificatori
-                    let modsHtml = '';
-                    if (p.modificatori && p.modificatori.length > 0) {
-                        modsHtml = '<div style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.8rem;">';
-                        p.modificatori.forEach(m => {
-                            let mColor = m.impatto_pct > 0 ? 'var(--accent-green)' : 'var(--accent-red)';
-                            let mBg = m.impatto_pct > 0 ? 'rgba(46,204,113,0.15)' : 'rgba(231,76,60,0.15)';
-                            modsHtml += `<div style="font-size:0.7rem; padding:3px 8px; border-radius:4px; background:${mBg}; border:1px solid ${mColor}; color:${mColor};">${m.testo}</div>`;
-                        });
-                        modsHtml += '</div>';
-                    }
+                // Badge modificatori
+                let modsHtml = '';
+                if (p.modificatori && p.modificatori.length > 0) {
+                    modsHtml = '<div style="display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.8rem;">';
+                    p.modificatori.forEach(m => {
+                        let mColor = m.impatto_pct > 0 ? 'var(--accent-green)' : 'var(--accent-red)';
+                        let mBg = m.impatto_pct > 0 ? 'rgba(46,204,113,0.15)' : 'rgba(231,76,60,0.15)';
+                        modsHtml += `<div style="font-size:0.7rem; padding:3px 8px; border-radius:4px; background:${mBg}; border:1px solid ${mColor}; color:${mColor};">${m.testo}</div>`;
+                    });
+                    modsHtml += '</div>';
+                }
 
-                    // Edge grezzo vs modificato
-                    let edgeCompare = '';
-                    if (c.edge_grezzo !== undefined && c.edge_grezzo !== c.edge && p.dati_verificati) {
-                        edgeCompare = `<div style="font-size:0.65rem; color:var(--text-secondary); margin-top:2px;">Poisson puro: ${c.edge_grezzo > 0 ? '+' : ''}${c.edge_grezzo}% → Con Filtro: ${c.edge > 0 ? '+' : ''}${c.edge}%</div>`;
-                    }
+                // Edge grezzo vs modificato
+                let edgeCompare = '';
+                if (c.edge_grezzo !== undefined && c.edge_grezzo !== c.edge && p.dati_verificati) {
+                    edgeCompare = `<div style="font-size:0.65rem; color:var(--text-secondary); margin-top:2px;">Poisson puro: ${c.edge_grezzo > 0 ? '+' : ''}${c.edge_grezzo}% → Con Filtro: ${c.edge > 0 ? '+' : ''}${c.edge}%</div>`;
+                }
 
-                    // Indicatore dati verificati
-                    let verifiedBadge = p.dati_verificati
-                        ? '<span style="font-size:0.65rem; color:var(--accent-green);">✅ Dati Verificati</span>'
-                        : '<span style="font-size:0.65rem; color:var(--text-secondary);">⚠️ Stima da quote</span>';
+                // Indicatore dati verificati
+                let verifiedBadge = p.dati_verificati
+                    ? '<span style="font-size:0.65rem; color:var(--accent-green);">✅ Dati Verificati</span>'
+                    : '<span style="font-size:0.65rem; color:var(--text-secondary);">⚠️ Stima da quote</span>';
 
-                    // xG info
-                    let xgInfo = '';
-                    if (p.stats && p.stats.xg_casa) {
-                        xgInfo = `<div style="font-size:0.7rem; color:var(--text-secondary); margin-top:0.3rem;">xG: ${p.squadra_casa} <strong style="color:white">${p.stats.xg_casa_mod}</strong> – ${p.squadra_ospite} <strong style="color:white">${p.stats.xg_ospite_mod}</strong></div>`;
-                    }
+                // xG info
+                let xgInfo = '';
+                if (p.stats && p.stats.xg_casa) {
+                    xgInfo = `<div style="font-size:0.7rem; color:var(--text-secondary); margin-top:0.3rem;">xG: ${p.squadra_casa} <strong style="color:white">${p.stats.xg_casa_mod}</strong> – ${p.squadra_ospite} <strong style="color:white">${p.stats.xg_ospite_mod}</strong></div>`;
+                }
 
-                    let cardHtml = `
-                        <div class="card" style="border-top: 5px solid ${displayColor}; background: ${bg}; margin-bottom: 0; display:flex; flex-direction:column; justify-content:space-between;">
-                            <div>
-                                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:0.8rem; margin-bottom:0.8rem;">
-                                    <div>
-                                        <div style="font-size:0.7rem; color:var(--text-secondary)">${p.data_inizio} · ${p.campionato || ''} ${verifiedBadge}</div>
-                                        <a href="https://www.google.com/search?q=${encodeURIComponent(c.bookmaker || 'quote scommesse')}+scommesse+${encodeURIComponent(p.squadra_casa)}+${encodeURIComponent(p.squadra_ospite)}" target="_blank" title="Apri risultati ricerca Google per ${c.bookmaker || 'Google'}" style="font-size:1.1rem; font-weight:800; margin-top:0.2rem; display:inline-block; color:white; text-decoration:none; border-bottom: 1px dashed rgba(255,255,255,0.4); cursor:pointer;">${p.squadra_casa} - ${p.squadra_ospite} <span style="font-size:0.8rem; opacity:0.7">🔍</span></a>
-                                    </div>
-                                    <div style="text-align:right">
-                                        <div style="font-size:0.75rem; font-weight:700; color:${displayColor}; text-transform:uppercase;">${labelStatus}</div>
-                                        <div style="font-size:1.3rem; font-family:'JetBrains Mono', monospace; font-weight:900; color:${displayColor}">${c.edge > 0 ? '+' : ''}${c.edge}%</div>
-                                        ${edgeCompare}
-                                    </div>
+                let cardHtml = `
+                    <div class="card" style="border-top: 5px solid ${displayColor}; background: ${bg}; margin-bottom: 0; display:flex; flex-direction:column; justify-content:space-between;">
+                        <div>
+                            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:0.8rem; margin-bottom:0.8rem;">
+                                <div>
+                                    <div style="font-size:0.7rem; color:var(--text-secondary)">${p.data_inizio} · ${p.campionato || ''} ${verifiedBadge}</div>
+                                    <a href="https://www.google.com/search?q=${encodeURIComponent(c.bookmaker || 'quote scommesse')}+scommesse+${encodeURIComponent(p.squadra_casa)}+${encodeURIComponent(p.squadra_ospite)}" target="_blank" title="Apri risultati ricerca Google per ${c.bookmaker || 'Google'}" style="font-size:1.1rem; font-weight:800; margin-top:0.2rem; display:inline-block; color:white; text-decoration:none; border-bottom: 1px dashed rgba(255,255,255,0.4); cursor:pointer;">${p.squadra_casa} - ${p.squadra_ospite} <span style="font-size:0.8rem; opacity:0.7">🔍</span></a>
                                 </div>
-                                ${modsHtml}
-                                <div style="font-size:0.75rem; color:var(--text-secondary); margin-bottom: 0.8rem;">
-                                    <p>Prob. Reale Algoritmo: <strong style="color:white">${c.prob_calcolata}%</strong></p>
-                                    <p>Prob. Stimata Bookmaker: <strong>${c.prob_bookmaker}%</strong></p>
-                                    ${xgInfo}
+                                <div style="text-align:right">
+                                    <div style="font-size:0.75rem; font-weight:700; color:${displayColor}; text-transform:uppercase;">${labelStatus}</div>
+                                    <div style="font-size:1.3rem; font-family:'JetBrains Mono', monospace; font-weight:900; color:${displayColor}">${c.edge > 0 ? '+' : ''}${c.edge}%</div>
+                                    ${edgeCompare}
                                 </div>
                             </div>
-                            
-                            <div style="background:var(--bg-primary); padding:1rem; border-radius:6px; border:1px solid var(--border); text-align:center;">
-                                <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:0.3rem">Offerta Migliore (su <strong>${c.bookmaker || 'N/D'}</strong>):</div>
-                                <div style="font-size:1.5rem; font-weight:900; color:white;">Esito ${c.segno} a <span style="color:var(--accent-blue)">${c.quota_bookmaker.toFixed(2)}</span></div>
-                                <button class="btn-bet" onclick="piazzaGiocata('${p.id}', '${p.squadra_casa} vs ${p.squadra_ospite}', '${c.segno}', ${c.quota_bookmaker})">🎯 Piazza Giocata</button>
+                            ${modsHtml}
+                            <div style="font-size:0.75rem; color:var(--text-secondary); margin-bottom: 0.8rem;">
+                                <p>Prob. Reale Algoritmo: <strong style="color:white">${c.prob_calcolata}%</strong></p>
+                                <p>Prob. Stimata Bookmaker: <strong>${c.prob_bookmaker}%</strong></p>
+                                ${xgInfo}
                             </div>
                         </div>
-                    `;
-                    
-                    if(c.semaforo === 'verde') htmlVerdi += cardHtml;
-                    else if(c.semaforo === 'gialla') htmlGialli += cardHtml;
-                    else htmlRossi += cardHtml;
-                });
+                        
+                        <div style="background:var(--bg-primary); padding:1rem; border-radius:6px; border:1px solid var(--border); text-align:center;">
+                            <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:0.3rem">Offerta Migliore (su <strong>${c.bookmaker || 'N/D'}</strong>):</div>
+                            <div style="font-size:1.5rem; font-weight:900; color:white;">Esito ${c.segno} a <span style="color:var(--accent-blue)">${c.quota_bookmaker.toFixed(2)}</span></div>
+                            <button class="btn-bet" onclick="piazzaGiocata('${p.id}', '${p.squadra_casa} vs ${p.squadra_ospite}', '${c.segno}', ${c.quota_bookmaker})">🎯 Piazza Giocata</button>
+                        </div>
+                    </div>
+                `;
                 
-                document.getElementById('colVerdi').innerHTML = htmlVerdi;
-                document.getElementById('colGialli').innerHTML = htmlGialli;
-                document.getElementById('colRossi').innerHTML = htmlRossi;
-                
-            } catch(e) {
-                console.error(e);
-                document.getElementById('matchesContainer').innerHTML = '<div class="card text-center" style="grid-column: 1 / -1; color:var(--accent-red)">Nessun dato scanner disponibile.</div>';
-            }
+                if(c.semaforo === 'verde') htmlVerdi += cardHtml;
+                else if(c.semaforo === 'gialla') htmlGialli += cardHtml;
+                else htmlRossi += cardHtml;
+            });
+            
+            document.getElementById('colVerdi').innerHTML = htmlVerdi;
+            document.getElementById('colGialli').innerHTML = htmlGialli;
+            document.getElementById('colRossi').innerHTML = htmlRossi;
+        }
+
         }
 
         // ====== BANKROLL TRACKER (MVP LocalStorage) ======
@@ -533,7 +530,7 @@
                     for (let s of scommesse) {
                         if (s.status === 'pending') {
                             // Creiamo la chiave di ricerca (home-away pulita)
-                            const key = s.teams.replace(" vs ", "-").lower().replace(/ /g, "");
+                            const key = s.teams.replace(" vs ", "-").toLowerCase().replace(/ /g, "");
                             if (liveResults[key]) {
                                 let matchResult = liveResults[key].result;
                                 let finalStatus = (matchResult === s.segno) ? 'win' : 'lose';
