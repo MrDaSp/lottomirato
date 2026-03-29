@@ -700,9 +700,16 @@ Sostituito il calcolo in € (troppo variabile) con il sistema a **Unità Fisse 
 1. **[X] Fix JS:** Sostituito `.lower()` con `.toLowerCase()` nelle funzioni di matching stringhe.
 2. **[X] Supabase Table:** Creata tabella `user_bets` con indici UUID e timestamp automatici.
 3. **[X] GitHub Action:** Aggiornato `auto-scanner.yml` per includere il doppio step (Valutazione Quote + Recupero Risultati).
+4. **[X] FIX EMERGENZA (Crash UI):** Risolto un errore di sintassi (`stray brace` alla riga 500) che bloccava l'intero motore Javascript all'avvio del sito. Sito tornato operativo in 5 minuti.
 
 ---
 
-### 🚀 Prossimo Step:
-- **Alert Telegram:** Notifiche push per le "Gemme" (>15% Edge).
-- **Filtro Statistico:** Possibilità di ordinare per probabilità di vittoria oltre che per Edge.
+### 🚀 Prossimo Step (FASE 4 - IN CORSO):
+#### 🤖 Telegram Alert Bot "Segugio di Quote"
+L'obiettivo è ricevere notifiche push istantanee per non perdere mai una Value Bet.
+- **Trigger:** Solo scommesse con Edge > 10-12% (Semaforo Verde).
+- **Canale:** Invio tramite Bot Telegram dedicato (BotFather).
+- **Contenuto:** Riepilogo match, quota suggerita e link Google Search integrato.
+- **Infrastruttura:** Integrazione diretta nello script `scanner.py` tramite `requests`.
+
+---
