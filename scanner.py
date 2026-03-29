@@ -267,10 +267,11 @@ def fetch_odds():
                     dt = datetime.strptime(ev['commence_time'],"%Y-%m-%dT%H:%M:%SZ")
                     ds = (dt+timedelta(hours=2)).strftime("%Y-%m-%d %H:%M")
                 except: ds = ev['commence_time']
+                bookmaker_name = bk[0].get('title', 'Global Market')
                 partite.append({
                     'id':ev['id'], 'campionato':LEAGUES[sport]['name'],
                     'squadra_casa':ht, 'squadra_ospite':at,
-                    'data_inizio':ds, 'quote':q, '_sk':sport
+                    'data_inizio':ds, 'quote':q, 'bookmaker':bookmaker_name, '_sk':sport
                 })
         except Exception as e:
             print(f"  Eccezione Odds-API {sport}: {e}")
@@ -376,8 +377,10 @@ def analizza(partite):
             'prob_calcolata': round(best['pr'],1),
             'edge': round(best['edge'],1),
             'edge_grezzo': round(best['eg'],1),
-            'semaforo': sem
+            'semaforo': sem,
+            'bookmaker': p.get('bookmaker', 'N/D')
         }
+
         risultati.append(p)
 
     save_cache(cache)

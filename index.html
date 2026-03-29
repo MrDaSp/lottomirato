@@ -451,7 +451,7 @@
                             </div>
                             
                             <div style="background:var(--bg-primary); padding:1rem; border-radius:6px; border:1px solid var(--border); text-align:center;">
-                                <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:0.3rem">Offerta Migliore:</div>
+                                <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:0.3rem">Offerta Migliore (su <strong>${c.bookmaker || 'N/D'}</strong>):</div>
                                 <div style="font-size:1.5rem; font-weight:900; color:white;">Esito ${c.segno} a <span style="color:var(--accent-blue)">${c.quota_bookmaker.toFixed(2)}</span></div>
                                 <button class="btn-bet" onclick="piazzaGiocata('${p.id}', '${p.squadra_casa} vs ${p.squadra_ospite}', '${c.segno}', ${c.quota_bookmaker})">🎯 Piazza Giocata</button>
                             </div>
