@@ -1,5 +1,5 @@
 {
-    "ultimo_aggiornamento": "2026-03-30 09:16:13",
+    "ultimo_aggiornamento": "2026-03-30 16:07:31",
     "versione_scanner": "2.0",
     "fonti_dati": {
         "quote": "The-Odds-API",
@@ -12,7 +12,7 @@
             "campionato": "Premier League",
             "squadra_casa": "Tottenham Hotspur",
             "squadra_ospite": "Brighton and Hove Albion",
-            "data_inizio": "2026-04-18 19:30",
+            "data_inizio": "2026-04-18 18:30",
             "quote": {
                 "1": 2.53,
                 "X": 3.88,
@@ -38,7 +38,7 @@
             "campionato": "Premier League",
             "squadra_casa": "Brentford",
             "squadra_ospite": "Fulham",
-            "data_inizio": "2026-04-18 14:30",
+            "data_inizio": "2026-04-18 13:30",
             "quote": {
                 "1": 2.17,
                 "X": 3.88,
@@ -64,7 +64,7 @@
             "campionato": "Premier League",
             "squadra_casa": "Newcastle United",
             "squadra_ospite": "Bournemouth",
-            "data_inizio": "2026-04-18 17:00",
+            "data_inizio": "2026-04-18 16:00",
             "quote": {
                 "1": 1.92,
                 "X": 4.12,
@@ -116,7 +116,7 @@
             "campionato": "Premier League",
             "squadra_casa": "Chelsea",
             "squadra_ospite": "Manchester City",
-            "data_inizio": "2026-04-12 18:30",
+            "data_inizio": "2026-04-12 17:30",
             "quote": {
                 "1": 2.85,
                 "X": 3.85,
@@ -194,10 +194,10 @@
             "campionato": "Premier League",
             "squadra_casa": "Chelsea",
             "squadra_ospite": "Manchester United",
-            "data_inizio": "2026-04-18 22:00",
+            "data_inizio": "2026-04-18 21:00",
             "quote": {
-                "1": 2.31,
-                "X": 3.48,
+                "1": 2.32,
+                "X": 3.46,
                 "2": 3.4
             },
             "bookmaker": "1xBet",
@@ -206,35 +206,9 @@
             "dati_verificati": false,
             "consiglio": {
                 "segno": "X",
-                "quota_bookmaker": 3.48,
-                "prob_bookmaker": 28.7,
+                "quota_bookmaker": 3.46,
+                "prob_bookmaker": 28.9,
                 "prob_calcolata": 32.0,
-                "edge": 3.2,
-                "edge_grezzo": 3.2,
-                "semaforo": "gialla",
-                "bookmaker": "1xBet"
-            }
-        },
-        {
-            "id": "d137c5f062243e857803fcebfdda2953",
-            "campionato": "Premier League",
-            "squadra_casa": "Leeds United",
-            "squadra_ospite": "Wolverhampton Wanderers",
-            "data_inizio": "2026-04-18 17:00",
-            "quote": {
-                "1": 1.72,
-                "X": 4.11,
-                "2": 5.28
-            },
-            "bookmaker": "1xBet",
-            "stats": {},
-            "modificatori": [],
-            "dati_verificati": false,
-            "consiglio": {
-                "segno": "1",
-                "quota_bookmaker": 1.72,
-                "prob_bookmaker": 58.1,
-                "prob_calcolata": 61.2,
                 "edge": 3.1,
                 "edge_grezzo": 3.1,
                 "semaforo": "gialla",
@@ -268,6 +242,32 @@
             }
         },
         {
+            "id": "d137c5f062243e857803fcebfdda2953",
+            "campionato": "Premier League",
+            "squadra_casa": "Leeds United",
+            "squadra_ospite": "Wolverhampton Wanderers",
+            "data_inizio": "2026-04-18 16:00",
+            "quote": {
+                "1": 1.71,
+                "X": 4.17,
+                "2": 5.28
+            },
+            "bookmaker": "1xBet",
+            "stats": {},
+            "modificatori": [],
+            "dati_verificati": false,
+            "consiglio": {
+                "segno": "1",
+                "quota_bookmaker": 1.71,
+                "prob_bookmaker": 58.5,
+                "prob_calcolata": 61.5,
+                "edge": 3.0,
+                "edge_grezzo": 3.0,
+                "semaforo": "gialla",
+                "bookmaker": "1xBet"
+            }
+        },
+        {
             "id": "aa83ffb32d9d72361f2cca8c1d3c2b19",
             "campionato": "Premier League",
             "squadra_casa": "Crystal Palace",
@@ -298,7 +298,7 @@
             "campionato": "Premier League",
             "squadra_casa": "Manchester United",
             "squadra_ospite": "Leeds United",
-            "data_inizio": "2026-04-13 22:00",
+            "data_inizio": "2026-04-13 21:00",
             "quote": {
                 "1": 1.67,
                 "X": 4.37,
@@ -324,7 +324,7 @@
             "campionato": "Premier League",
             "squadra_casa": "West Ham United",
             "squadra_ospite": "Wolverhampton Wanderers",
-            "data_inizio": "2026-04-10 22:00",
+            "data_inizio": "2026-04-10 21:00",
             "quote": {
                 "1": 1.87,
                 "X": 3.86,
@@ -378,9 +378,9 @@
             "squadra_ospite": "Arsenal",
             "data_inizio": "2026-04-19 17:30",
             "quote": {
-                "1": 2.26,
-                "X": 3.46,
-                "2": 3.13
+                "1": 2.25,
+                "X": 3.47,
+                "2": 3.15
             },
             "bookmaker": "Pinnacle",
             "stats": {},
@@ -388,11 +388,11 @@
             "dati_verificati": false,
             "consiglio": {
                 "segno": "X",
-                "quota_bookmaker": 3.46,
-                "prob_bookmaker": 28.9,
+                "quota_bookmaker": 3.47,
+                "prob_bookmaker": 28.8,
                 "prob_calcolata": 31.2,
-                "edge": 2.3,
-                "edge_grezzo": 2.3,
+                "edge": 2.4,
+                "edge_grezzo": 2.4,
                 "semaforo": "gialla",
                 "bookmaker": "Pinnacle"
             }
@@ -457,7 +457,7 @@
             "data_inizio": "2026-04-04 18:00",
             "quote": {
                 "1": 4.19,
-                "X": 3.51,
+                "X": 3.52,
                 "2": 1.95
             },
             "bookmaker": "Pinnacle",
@@ -532,7 +532,7 @@
             "campionato": "Premier League",
             "squadra_casa": "Burnley",
             "squadra_ospite": "Brighton and Hove Albion",
-            "data_inizio": "2026-04-11 17:00",
+            "data_inizio": "2026-04-11 16:00",
             "quote": {
                 "1": 4.1,
                 "X": 4.0,
@@ -558,7 +558,7 @@
             "campionato": "Premier League",
             "squadra_casa": "Sunderland",
             "squadra_ospite": "Tottenham Hotspur",
-            "data_inizio": "2026-04-12 16:00",
+            "data_inizio": "2026-04-12 15:00",
             "quote": {
                 "1": 2.5,
                 "X": 3.35,
@@ -662,7 +662,7 @@
             "campionato": "Premier League",
             "squadra_casa": "Liverpool",
             "squadra_ospite": "Fulham",
-            "data_inizio": "2026-04-11 19:30",
+            "data_inizio": "2026-04-11 18:30",
             "quote": {
                 "1": 1.5,
                 "X": 4.4,
@@ -688,7 +688,7 @@
             "campionato": "Premier League",
             "squadra_casa": "Crystal Palace",
             "squadra_ospite": "West Ham United",
-            "data_inizio": "2026-04-20 22:00",
+            "data_inizio": "2026-04-20 21:00",
             "quote": {
                 "1": 2.05,
                 "X": 3.4,
@@ -792,7 +792,7 @@
             "campionato": "Premier League",
             "squadra_casa": "Brentford",
             "squadra_ospite": "Everton",
-            "data_inizio": "2026-04-11 17:00",
+            "data_inizio": "2026-04-11 16:00",
             "quote": {
                 "1": 2.1,
                 "X": 3.35,
@@ -844,7 +844,7 @@
             "campionato": "Premier League",
             "squadra_casa": "Everton",
             "squadra_ospite": "Liverpool",
-            "data_inizio": "2026-04-19 16:00",
+            "data_inizio": "2026-04-19 15:00",
             "quote": {
                 "1": 3.05,
                 "X": 3.4,
@@ -922,10 +922,10 @@
             "campionato": "Premier League",
             "squadra_casa": "Arsenal",
             "squadra_ospite": "Bournemouth",
-            "data_inizio": "2026-04-11 14:30",
+            "data_inizio": "2026-04-11 13:30",
             "quote": {
-                "1": 1.34,
-                "X": 4.8,
+                "1": 1.33,
+                "X": 4.9,
                 "2": 7.5
             },
             "bookmaker": "Winamax (FR)",
@@ -934,11 +934,11 @@
             "dati_verificati": false,
             "consiglio": {
                 "segno": "1",
-                "quota_bookmaker": 1.34,
-                "prob_bookmaker": 74.6,
-                "prob_calcolata": 73.8,
-                "edge": -0.8,
-                "edge_grezzo": -0.8,
+                "quota_bookmaker": 1.33,
+                "prob_bookmaker": 75.2,
+                "prob_calcolata": 74.1,
+                "edge": -1.1,
+                "edge_grezzo": -1.1,
                 "semaforo": "rossa",
                 "bookmaker": "Winamax (FR)"
             }
