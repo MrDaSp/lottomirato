@@ -216,12 +216,17 @@
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
-            <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
                 <h3 style="margin:0;">Opportunità del Giorno</h3>
                 <select id="leagueFilter" onchange="filtraCampionati()" style="background:var(--bg-secondary); color:white; border:1px solid var(--border); padding:0.5rem; border-radius:6px; outline:none; cursor:pointer;">
                     <option value="all">🌍 Tutti i Match</option>
                     <option value="top">🥇 Top Europei (A, Premier, Liga...)</option>
                     <option value="italy">🇮🇹 Solo Serie A & B</option>
+                </select>
+                <select id="adviceMode" onchange="filtraCampionati()" style="background:var(--bg-secondary); color:white; border:1px solid var(--border); padding:0.5rem; border-radius:6px; outline:none; cursor:pointer; border-left: 3px solid var(--accent-blue);">
+                    <option value="edge">📊 Modalità: Edge (Value Bet)</option>
+                    <option value="prob">🎯 Modalità: Probabilità Vittoria</option>
+                    <option value="profit">💰 Modalità: Guadagno Potenziale</option>
                 </select>
             </div>
             <button onclick="document.getElementById('bankrollSection').scrollIntoView({behavior:'smooth'})" style="background:transparent; border:1px solid var(--accent-blue); color:var(--accent-blue); padding:0.5rem 1rem; border-radius:6px; cursor:pointer;">Vai a Il Mio Bankroll 📈</button>
@@ -460,6 +465,7 @@
         function filtraCampionati() {
             if(!globalData) return;
             const filter = document.getElementById('leagueFilter').value;
+            const mode = document.getElementById('adviceMode').value;
             
             let filtered = [...globalData.partite];
             if(filter === 'top') {
@@ -469,13 +475,106 @@
                 filtered = filtered.filter(p => p.campionato.includes("Serie A") || p.campionato.includes("Serie B"));
             }
 
+            // Ricalcola consiglio in base alla modalità selezionata
+            filtered = ricalcolaConsiglio(filtered, mode);
             renderMatches(filtered);
         }
 
+        /**
+         * Ricalcola il consiglio per ogni partita in base alla modalità:
+         * - edge:   segno con Edge più alto (Value Betting classico)
+         * - prob:   segno con probabilità di vittoria più alta
+         * - profit: segno col guadagno potenziale più alto (quota × probabilità)
+         */
+        function ricalcolaConsiglio(partite, mode) {
+            if (mode === 'edge') return partite; // Default: usa i dati originali dello scanner
+
+            return partite.map(p => {
+                const pp = JSON.parse(JSON.stringify(p)); // Deep clone
+                const q = pp.quote;
+                // Usa prob_full se disponibile, altrimenti ricava dalle quote
+                let probs = pp.prob_full;
+                if (!probs) {
+                    // Fallback: stima probabilità dalle quote (come fa lo scanner senza API-Football)
+                    const lam_h = 2.5 / Math.max(q['1'], 1.01);
+                    const lam_a = 2.5 / Math.max(q['2'], 1.01);
+                    probs = calcolaProbFrontend(lam_h, lam_a);
+                }
+
+                let bestSegno = '', bestScore = -Infinity, bestQuota = 0, bestProb = 0;
+
+                for (const segno of ['1', 'X', '2']) {
+                    const quota = parseFloat(q[segno]);
+                    const prob = probs[segno];
+                    if (quota <= 1) continue;
+
+                    let score;
+                    if (mode === 'prob') {
+                        score = prob; // Probabilità più alta
+                    } else if (mode === 'profit') {
+                        score = (prob / 100) * (quota - 1); // Expected profit = prob × (quota-1)
+                    }
+
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestSegno = segno;
+                        bestQuota = quota;
+                        bestProb = prob;
+                    }
+                }
+
+                const imp = 100.0 / bestQuota;
+                const edge = bestProb - imp;
+
+                let sem = 'rossa';
+                if (mode === 'prob') {
+                    if (bestProb >= 50) sem = 'verde';
+                    else if (bestProb >= 35) sem = 'gialla';
+                } else if (mode === 'profit') {
+                    if (bestScore >= 0.15) sem = 'verde';
+                    else if (bestScore >= 0) sem = 'gialla';
+                }
+
+                pp.consiglio = {
+                    ...pp.consiglio,
+                    segno: bestSegno,
+                    quota_bookmaker: bestQuota,
+                    prob_bookmaker: parseFloat(imp.toFixed(1)),
+                    prob_calcolata: parseFloat(bestProb.toFixed ? bestProb.toFixed(1) : bestProb),
+                    edge: parseFloat(edge.toFixed(1)),
+                    semaforo: sem,
+                    _mode_score: bestScore // Per ordinamento
+                };
+                return pp;
+            });
+        }
+
+        // Calcolo Poisson frontend (fallback se prob_full mancante)
+        function calcolaProbFrontend(lam_h, lam_a) {
+            let p1 = 0, pX = 0, p2 = 0;
+            for (let h = 0; h <= 5; h++) {
+                for (let a = 0; a <= 5; a++) {
+                    const p = poisson(h, Math.max(lam_h, 0.05)) * poisson(a, Math.max(lam_a, 0.05));
+                    if (h > a) p1 += p;
+                    else if (h === a) pX += p;
+                    else p2 += p;
+                }
+            }
+            return { '1': p1 * 100, 'X': pX * 100, '2': p2 * 100 };
+        }
+
         function renderMatches(partite) {
-            let htmlVerdi = '<h4 style="text-align:center; color:var(--accent-green); border-bottom:2px solid var(--accent-green); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟢 VANTAGGIO ALTO</h4>';
-            let htmlGialli = '<h4 style="text-align:center; color:var(--accent-yellow); border-bottom:2px solid var(--accent-yellow); padding-bottom:0.5rem; margin-bottom:0.5rem;">🟡 MARGINE LIEVE</h4>';
-            let htmlRossi = '<h4 style="text-align:center; color:var(--accent-red); border-bottom:2px solid var(--accent-red); padding-bottom:0.5rem; margin-bottom:0.5rem;">🔴 TRAPPOLE</h4>';
+            const mode = document.getElementById('adviceMode').value;
+            let colLabels = {
+                edge:   { v: '🟢 VANTAGGIO ALTO', g: '🟡 MARGINE LIEVE', r: '🔴 TRAPPOLE' },
+                prob:   { v: '🟢 ALTA PROBABILITÀ', g: '🟡 MEDIA PROBABILITÀ', r: '🔴 BASSA PROBABILITÀ' },
+                profit: { v: '🟢 PROFITTO ATTESO ALTO', g: '🟡 PROFITTO MARGINALE', r: '🔴 PROFITTO NEGATIVO' }
+            };
+            const labels = colLabels[mode] || colLabels.edge;
+
+            let htmlVerdi = `<h4 style="text-align:center; color:var(--accent-green); border-bottom:2px solid var(--accent-green); padding-bottom:0.5rem; margin-bottom:0.5rem;">${labels.v}</h4>`;
+            let htmlGialli = `<h4 style="text-align:center; color:var(--accent-yellow); border-bottom:2px solid var(--accent-yellow); padding-bottom:0.5rem; margin-bottom:0.5rem;">${labels.g}</h4>`;
+            let htmlRossi = `<h4 style="text-align:center; color:var(--accent-red); border-bottom:2px solid var(--accent-red); padding-bottom:0.5rem; margin-bottom:0.5rem;">${labels.r}</h4>`;
             
             // Ordina cronologicamente
             partite.sort((a, b) => new Date(a.data_inizio.replace(' ', 'T')) - new Date(b.data_inizio.replace(' ', 'T')));
@@ -529,7 +628,7 @@
                                 </div>
                                 <div style="text-align:right">
                                     <div style="font-size:0.75rem; font-weight:700; color:${displayColor}; text-transform:uppercase;">${labelStatus}</div>
-                                    <div style="font-size:1.3rem; font-family:'JetBrains Mono', monospace; font-weight:900; color:${displayColor}">${c.edge > 0 ? '+' : ''}${c.edge}%</div>
+                                    <div style="font-size:1.3rem; font-family:'JetBrains Mono', monospace; font-weight:900; color:${displayColor}">${mode === 'profit' ? '€' + (c._mode_score !== undefined ? c._mode_score.toFixed(2) : ((c.prob_calcolata/100) * (c.quota_bookmaker - 1)).toFixed(2)) + '/€' : (c.edge > 0 ? '+' : '') + c.edge + '%'}</div>
                                     ${edgeCompare}
                                 </div>
                             </div>
@@ -537,6 +636,7 @@
                             <div style="font-size:0.75rem; color:var(--text-secondary); margin-bottom: 0.8rem;">
                                 <p>Prob. Reale Algoritmo: <strong style="color:white">${c.prob_calcolata}%</strong></p>
                                 <p>Prob. Stimata Bookmaker: <strong>${c.prob_bookmaker}%</strong></p>
+                                <p>Edge: <strong style="color:${c.edge > 0 ? 'var(--accent-green)' : 'var(--accent-red)'}">${c.edge > 0 ? '+' : ''}${c.edge}%</strong>${mode !== 'edge' ? ' · Profitto Att.: <strong style="color:var(--accent-blue)">€' + ((c.prob_calcolata/100) * (c.quota_bookmaker - 1)).toFixed(2) + '/€</strong>' : ''}</p>
                                 ${xgInfo}
                             </div>
                         </div>

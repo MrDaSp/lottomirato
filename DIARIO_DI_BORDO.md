@@ -774,3 +774,98 @@ L'obiettivo è ricevere notifiche push istantanee per non perdere mai una Value 
 - **Infrastruttura:** Integrazione diretta nello script `scanner.py` tramite `requests`.
 
 ---
+
+### 🎛️ Tri-Modalità Consiglio: Edge / Probabilità / Guadagno (30 Marzo 2026)
+
+#### Problema Identificato
+Il sistema consigliava sempre la partita/il segno con **Edge più alto** (Value Betting puro). L'utente ha chiesto la possibilità di visualizzare i consigli anche secondo criteri alternativi.
+
+#### Soluzione Implementata
+Aggiunto un **menù a tendina "Modalità Consiglio"** accanto al filtro campionati, con 3 modalità:
+
+| Modalità | Criterio di Selezione | Colonne Dashboard | Valore Mostrato |
+|----------|----------------------|-------------------|-----------------|
+| **📊 Edge (Value Bet)** | Segno con Edge più alto (default) | Vantaggio Alto / Margine Lieve / Trappole | +X.X% |
+| **🎯 Probabilità Vittoria** | Segno con probabilità calcolata più alta | Alta Prob. / Media Prob. / Bassa Prob. | +X.X% |
+| **💰 Guadagno Potenziale** | Segno con profitto atteso più alto (prob × (quota-1)) | Profitto Alto / Marginale / Negativo | €X.XX/€ |
+
+#### Dettaglio Tecnico
+1. **`scanner.py`**: Aggiunto campo `prob_full` nel JSON con le probabilità di tutti e 3 i segni (`{1: xx, X: xx, 2: xx}`), permettendo al frontend di ricalcolare senza bisogno di rieseguire lo scanner.
+2. **`index.html`**: Nuova funzione `ricalcolaConsiglio(partite, mode)` che:
+   - In modalità `edge`: usa i dati originali dello scanner (invariato).
+   - In modalità `prob`: seleziona il segno con la probabilità Poisson più alta.
+   - In modalità `profit`: seleziona il segno che massimizza `(probabilità/100) × (quota - 1)` (profitto atteso per euro).
+3. **Fallback**: Se `prob_full` non è ancora disponibile (vecchio JSON), il frontend ricalcola le probabilità Poisson direttamente nel browser usando `calcolaProbFrontend()`.
+4. **Semafori adattivi**: Ogni modalità ha soglie di colorazione diverse (es. in modalità prob: verde ≥50%, giallo ≥35%; in modalità profit: verde ≥0.15€/€).
+5. **Info aggiuntive**: In tutte le modalità, ogni card mostra ora sia l'Edge che il Profitto Atteso per euro, garantendo trasparenza completa.
+
+**Status Deploy:** Modifiche pronte per push su GitHub Pages.
+
+---
+
+### 🧠 Analisi Profondità Scanner & Roadmap Miglioramenti (30 Marzo 2026)
+
+Dopo la discussione sulla logica di raccomandazione, è emerso un audit completo di cosa lo scanner valuta e cosa NO. Le idee vengono archiviate qui per implementazione futura, dopo la fase di test del sistema attuale.
+
+#### ✅ Cosa FA già il motore (v2)
+
+| Fattore | Meccanismo | Impatto |
+|---------|-----------|---------|
+| **Infortuni confermati** | API-Football `/injuries` per fixture | -4% per assenza, -8% extra se ≥4 assenti |
+| **Squalificati** | Inclusi nello stesso endpoint infortuni | Idem |
+| **Forma recente (5 partite)** | Stringa `WWLWL` da API-Football `/teams/statistics` | +5% se ≥3W, -8% se ≥3L |
+| **Statistiche gol reali** | Media gol fatti/subiti (casa/fuori) per stagione | Base per calcolo xG Dixon-Coles |
+| **Quote bookmaker reali** | The-Odds-API mercato H2H | Calcolo Edge = nostra prob - prob implicita |
+
+#### ❌ Cosa NON valuta (Idee Future – FASE 5)
+
+##### 🔴 Priorità Alta (Impatto significativo, fattibili con API-Football)
+
+1. **Rilevatore Fatica / Congestion Detector**
+   - **Problema:** Inter gioca mercoledì Champions e sabato Serie A → arriva scarica. Il sistema attuale non lo sa.
+   - **Soluzione:** Usare `/fixtures?team=X&last=2` per verificare quando ha giocato l'ultima partita.
+   - **Regola proposta:** Se < 3 giorni dall'ultima partita → penalità **-6%** sulla lambda.
+   - **Endpoint:** `GET /fixtures?team={id}&last=2` → confronto date.
+
+2. **Rilevatore Coppe Europee (Champions/Europa League)**
+   - **Problema:** Una partita infrasettimanale in Champions pesa più di una di campionato (viaggio, sforzo, pressione).
+   - **Soluzione:** Se l'ultima partita era in una competizione europea → penalità extra **-4%** (cumulabile col punto 1).
+   - **Logica:** Controllare il campo `league.name` dell'ultimo fixture: se contiene "Champions", "Europa League", "Conference" → flag attivo.
+
+3. **Scontri Diretti (Head-to-Head)**
+   - **Problema:** Alcune squadre hanno "bestie nere" storiche (es. Juventus fatica sempre contro X).
+   - **Soluzione:** `/fixtures/headtohead?h2h={team1}-{team2}&last=10` → se una squadra ha vinto 7/10 degli ultimi scontri diretti, boost +3%.
+   - **Costo API:** 1 richiesta per partita → ~20 req/scan.
+
+##### 🟡 Priorità Media (Impatto medio, implementazione più complessa)
+
+4. **Peso del Giocatore Infortunato**
+   - **Problema:** Perdere Lautaro Martínez ≠ perdere il terzo portiere, ma il sistema conta -4% uguale per tutti.
+   - **Soluzione Parziale:** API-Football fornisce il `type` e la `position` del giocatore. Potremmo pesare:
+     - Attaccante/Trequartista → -6% (pesa di più sui gol)
+     - Centrocampista → -4% (standard)
+     - Difensore/Portiere titolare → -5% (pesa sulla difesa lambda avversaria)
+   - **Limite:** Non abbiamo un "rating importanza" del giocatore, solo il ruolo.
+
+5. **Forma Casa/Trasferta Separata**
+   - **Problema:** La forma attuale è globale (ultimi 5 risultati). Ma una squadra può essere fortissima in casa e debole fuori.
+   - **Soluzione:** Separare la stringa forma in "forma casa" e "forma trasferta" per applicare il modificatore corretto.
+
+##### ⚪ Priorità Bassa (Soggettivi, difficili da quantificare)
+
+6. **Motivazione di Classifica**
+   - Sassuolo in lotta salvezza gioca col coltello tra i denti vs squadra a metà classifica senza obiettivi.
+   - Difficile da automatizzare: richiederebbe scaricare la classifica e inferire "zona retrocessione", "zona Champions", "zona neutra".
+
+7. **Fattore Derby / Stadio Pieno**
+   - Partite derby hanno dinamiche uniche non catturate dalle statistiche.
+   - Richiederebbe un database manuale di derby per ogni lega.
+
+8. **Mercato Invernale / Nuovi Acquisti**
+   - Squadra rinforzata a gennaio potrebbe essere più forte di quanto dicano le statistiche stagionali.
+   - Non rilevabile automaticamente.
+
+#### 📌 Decisione Operativa
+> **Per ora si testa il sistema così com'è (v2).** Le idee sopra vengono archiviate come **FASE 5** della roadmap. Verranno implementate dopo aver raccolto i primi risultati reali delle scommesse (checkpoint: dopo il 5 Aprile 2026).
+
+---

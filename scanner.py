@@ -371,6 +371,12 @@ def analizza(partite):
         p['stats'] = stats_info
         p['modificatori'] = mods
         p['dati_verificati'] = verified
+        # Probabilità complete per tutti e 3 i segni (usate dal frontend per cambiare modalità)
+        p['prob_full'] = {
+            '1': float(prob['1']),
+            'X': float(prob['X']),
+            '2': float(prob['2'])
+        }
         p['consiglio'] = {
             'segno': best['segno'], 'quota_bookmaker': best['quota'],
             'prob_bookmaker': round(best['pb'],1),
