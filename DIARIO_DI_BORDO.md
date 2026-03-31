@@ -869,3 +869,26 @@ Dopo la discussione sulla logica di raccomandazione, è emerso un audit completo
 > **Per ora si testa il sistema così com'è (v2).** Le idee sopra vengono archiviate come **FASE 5** della roadmap. Verranno implementate dopo aver raccolto i primi risultati reali delle scommesse (checkpoint: dopo il 5 Aprile 2026).
 
 ---
+
+### 🛡️ Whitelist Bookmakers ADM/EU e Quota Massima Reale (31 Marzo 2026)
+
+#### Problema Identificato
+L'utente ha segnalato che lo scanner restituiva consigli su **siti oscurati in Italia** (come *Pinnacle*, *1xBet*, *Coolbet*, ecc.) dove è impossibile registrarsi o piazzare scommesse legali.
+Inoltre, da un'analisi del codice di `scanner.py`, è emerso un enorme bug della v1: il bot estraeva **puramente il primo bookmaker** (`bk[0]`) ritornato dalle API, perdendo totalmente l'opportunità di confrontare i mercati per trovare la VERA quota massimizzata per il value betting.
+
+#### Soluzione Implementata
+
+1.  **Filtro Whitelist Invalicabile:**
+    *   Sostituito il tentato blocco (blacklist) con un sistema a `whitelist` che esamina tutti i bookmakers di The-Odds-API e fa passare SOLO quelli europei affidabili e regolarmente permessi in Italia.
+    *   **Bookmakers Autorizzati:** `williamhill`, `betfair_ex_eu`, `betfair_sb_uk`, `bwin`, `unibet_eu`, `betclic`, `888sport`, `leovegas`, `betway`, `paddypower`, `skybet`, `betvictor`, ecc.
+
+2.  **Calcolatore Quota Massima Globale:**
+    *   Lo scanner ora esegue un loop su **TUTTI** i bookmaker passati dalla whitelist per una data partita.
+    *   Estrae separatamente la *Quota Massima Assoluta* per l'**Esito 1**, l'**Esito X** e l'**Esito 2**.
+    *   Memorizza anche un dizionario dinamico che lega il nome del bookmaker al rispettivo segno (es. *Betfair* offre il meglio per 1, *Snai* per X, *WilliamHill* per 2).
+
+3.  **Frontend Sincronizzato (`index.html`):**
+    *   Facendo lo switch nel menu a tendina "Modalità Consiglio" tra `Edge`, `Probabilità` o `Guadagno Potenziale`, se cambia il pronostico consigliato, l'interfaccia aggiornerà automaticamente la card per farti scommettere sul **preciso bookmaker** che offriva prima il massimo su quel segno specifico.
+
+**Status Deploy:** Conflitto GitHub risolto. Modifiche pushate con successo in Produzione.
+---
