@@ -254,24 +254,44 @@ def fetch_odds():
             for ev in r.json():
                 bk = ev.get('bookmakers', [])
                 if not bk: continue
-                h2h = next((m for m in bk[0].get('markets',[]) if m['key']=='h2h'), None)
-                if not h2h: continue
                 ht, at = ev['home_team'], ev['away_team']
-                q = {'1':0,'X':0,'2':0}
-                for o in h2h['outcomes']:
-                    if o['name']==ht: q['1']=o['price']
-                    elif o['name']==at: q['2']=o['price']
-                    elif o['name'].lower()=='draw': q['X']=o['price']
-                if 0 in q.values(): continue
+                
+                best_q = {'1':0, 'X':0, '2':0}
+                best_bk = {'1':'N/D', 'X':'N/D', '2':'N/D'}
+                
+                # Elenco bookmaker vietati in Italia o offshore non autorizzati
+                banned_bks = ['pinnacle', '1xbet', 'stake', 'mybookieag', 'bovada', 'betonlineag']
+                
+                for b in bk:
+                    if b['key'].lower() in banned_bks:
+                        continue # Evita bookmaker inaccessibili
+                        
+                    h2h = next((m for m in b.get('markets',[]) if m['key']=='h2h'), None)
+                    if not h2h: continue
+                    
+                    q = {'1':0,'X':0,'2':0}
+                    for o in h2h['outcomes']:
+                        if o['name']==ht: q['1']=o['price']
+                        elif o['name']==at: q['2']=o['price']
+                        elif o['name'].lower()=='draw': q['X']=o['price']
+                        
+                    # Salva la quota massima trovata per questo segno
+                    for segno in ['1', 'X', '2']:
+                        if q[segno] > best_q[segno]:
+                            best_q[segno] = q[segno]
+                            best_bk[segno] = b.get('title', 'N/D')
+                            
+                if 0 in best_q.values(): continue
+                
                 try:
                     dt = datetime.strptime(ev['commence_time'],"%Y-%m-%dT%H:%M:%SZ")
                     ds = (dt+timedelta(hours=2)).strftime("%Y-%m-%d %H:%M")
                 except: ds = ev['commence_time']
-                bookmaker_name = bk[0].get('title', 'Global Market')
+                
                 partite.append({
                     'id':ev['id'], 'campionato':LEAGUES[sport]['name'],
                     'squadra_casa':ht, 'squadra_ospite':at,
-                    'data_inizio':ds, 'quote':q, 'bookmaker':bookmaker_name, '_sk':sport
+                    'data_inizio':ds, 'quote':best_q, 'bookies':best_bk, '_sk':sport
                 })
         except Exception as e:
             print(f"  Eccezione Odds-API {sport}: {e}")
@@ -377,6 +397,9 @@ def analizza(partite):
             'X': float(prob['X']),
             '2': float(prob['2'])
         }
+        bookies_dict = p.get('bookies', {})
+        best_bk_name = bookies_dict.get(best['segno'], 'N/D')
+
         p['consiglio'] = {
             'segno': best['segno'], 'quota_bookmaker': best['quota'],
             'prob_bookmaker': round(best['pb'],1),
@@ -384,7 +407,7 @@ def analizza(partite):
             'edge': round(best['edge'],1),
             'edge_grezzo': round(best['eg'],1),
             'semaforo': sem,
-            'bookmaker': p.get('bookmaker', 'N/D')
+            'bookmaker': best_bk_name
         }
 
         risultati.append(p)
