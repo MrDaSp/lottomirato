@@ -259,12 +259,16 @@ def fetch_odds():
                 best_q = {'1':0, 'X':0, '2':0}
                 best_bk = {'1':'N/D', 'X':'N/D', '2':'N/D'}
                 
-                # Elenco bookmaker vietati in Italia o offshore non autorizzati
-                banned_bks = ['pinnacle', '1xbet', 'stake', 'mybookieag', 'bovada', 'betonlineag']
+                # Elenco dei SOLI bookmaker legali/utilizzabili in Italia e in Europa (Whitelist ADM/AAMS + Major Europei)
+                allowed_bks = [
+                    'williamhill', 'betfair_ex_eu', 'betfair_sb_uk', 'bwin', 
+                    'unibet_eu', 'betclic', '888sport', 'leovegas', 'betway',
+                    'paddypower', 'skybet', 'betvictor', 'coral', 'ladbrokes'
+                ]
                 
                 for b in bk:
-                    if b['key'].lower() in banned_bks:
-                        continue # Evita bookmaker inaccessibili
+                    if b['key'].lower() not in allowed_bks:
+                        continue # Scarta tutti i bookmaker offshore, asiatici o non in lista (es. 1xbet, pinnacle, coolbet)
                         
                     h2h = next((m for m in b.get('markets',[]) if m['key']=='h2h'), None)
                     if not h2h: continue
