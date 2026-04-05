@@ -1,5 +1,5 @@
 {
-    "ultimo_aggiornamento": "2026-04-05 07:42:19",
+    "ultimo_aggiornamento": "2026-04-05 07:49:52",
     "versione_scanner": "2.0",
     "fonti_dati": {
         "quote": "The-Odds-API",
@@ -183,6 +183,41 @@
             }
         },
         {
+            "id": "b1b253402d511794ce9c1f2a5c9924bc",
+            "campionato": "Serie A",
+            "squadra_casa": "Inter Milan",
+            "squadra_ospite": "AS Roma",
+            "data_inizio": "2026-04-05 20:45",
+            "quote": {
+                "1": 1.67,
+                "X": 4.0,
+                "2": 6.2
+            },
+            "bookies": {
+                "1": "Betfair",
+                "X": "Betfair",
+                "2": "Betfair"
+            },
+            "stats": {},
+            "modificatori": [],
+            "dati_verificati": false,
+            "prob_full": {
+                "1": 64.39,
+                "X": 25.44,
+                "2": 9.73
+            },
+            "consiglio": {
+                "segno": "1",
+                "quota_bookmaker": 1.67,
+                "prob_bookmaker": 59.9,
+                "prob_calcolata": 64.4,
+                "edge": 4.5,
+                "edge_grezzo": 4.5,
+                "semaforo": "gialla",
+                "bookmaker": "Betfair"
+            }
+        },
+        {
             "id": "3e7369c873aed1c62f4d76fd652d73c7",
             "campionato": "Premier League",
             "squadra_casa": "Everton",
@@ -226,7 +261,7 @@
             "quote": {
                 "1": 5.3,
                 "X": 3.8,
-                "2": 1.82
+                "2": 1.81
             },
             "bookies": {
                 "1": "Betfair",
@@ -237,50 +272,15 @@
             "modificatori": [],
             "dati_verificati": false,
             "prob_full": {
-                "1": 12.67,
-                "X": 27.82,
-                "2": 59.22
+                "1": 12.6,
+                "X": 27.68,
+                "2": 59.42
             },
             "consiglio": {
                 "segno": "2",
-                "quota_bookmaker": 1.82,
-                "prob_bookmaker": 54.9,
-                "prob_calcolata": 59.2,
-                "edge": 4.3,
-                "edge_grezzo": 4.3,
-                "semaforo": "gialla",
-                "bookmaker": "Betfair"
-            }
-        },
-        {
-            "id": "b1b253402d511794ce9c1f2a5c9924bc",
-            "campionato": "Serie A",
-            "squadra_casa": "Inter Milan",
-            "squadra_ospite": "AS Roma",
-            "data_inizio": "2026-04-05 20:45",
-            "quote": {
-                "1": 1.68,
-                "X": 4.1,
-                "2": 6.0
-            },
-            "bookies": {
-                "1": "Betfair",
-                "X": "Betfair",
-                "2": "Betfair"
-            },
-            "stats": {},
-            "modificatori": [],
-            "dati_verificati": false,
-            "prob_full": {
-                "1": 63.77,
-                "X": 25.65,
-                "2": 10.15
-            },
-            "consiglio": {
-                "segno": "1",
-                "quota_bookmaker": 1.68,
-                "prob_bookmaker": 59.5,
-                "prob_calcolata": 63.8,
+                "quota_bookmaker": 1.81,
+                "prob_bookmaker": 55.2,
+                "prob_calcolata": 59.4,
                 "edge": 4.2,
                 "edge_grezzo": 4.2,
                 "semaforo": "gialla",
@@ -953,41 +953,6 @@
             }
         },
         {
-            "id": "5293817b7f4a4732e56eb630a3c6c560",
-            "campionato": "Serie A",
-            "squadra_casa": "Cremonese",
-            "squadra_ospite": "Bologna",
-            "data_inizio": "2026-04-05 15:00",
-            "quote": {
-                "1": 3.7,
-                "X": 3.4,
-                "2": 2.26
-            },
-            "bookies": {
-                "1": "Betfair",
-                "X": "Betfair",
-                "2": "Betfair"
-            },
-            "stats": {},
-            "modificatori": [],
-            "dati_verificati": false,
-            "prob_full": {
-                "1": 22.31,
-                "X": 31.97,
-                "2": 45.62
-            },
-            "consiglio": {
-                "segno": "X",
-                "quota_bookmaker": 3.4,
-                "prob_bookmaker": 29.4,
-                "prob_calcolata": 32.0,
-                "edge": 2.6,
-                "edge_grezzo": 2.6,
-                "semaforo": "gialla",
-                "bookmaker": "Betfair"
-            }
-        },
-        {
             "id": "6a932fae8df6532d61938a879d3b2563",
             "campionato": "Serie A",
             "squadra_casa": "AC Milan",
@@ -1055,6 +1020,41 @@
                 "edge_grezzo": 2.2,
                 "semaforo": "gialla",
                 "bookmaker": "William Hill"
+            }
+        },
+        {
+            "id": "5293817b7f4a4732e56eb630a3c6c560",
+            "campionato": "Serie A",
+            "squadra_casa": "Cremonese",
+            "squadra_ospite": "Bologna",
+            "data_inizio": "2026-04-05 15:00",
+            "quote": {
+                "1": 3.7,
+                "X": 3.35,
+                "2": 2.26
+            },
+            "bookies": {
+                "1": "Betfair",
+                "X": "Betfair",
+                "2": "Betfair"
+            },
+            "stats": {},
+            "modificatori": [],
+            "dati_verificati": false,
+            "prob_full": {
+                "1": 22.31,
+                "X": 31.97,
+                "2": 45.62
+            },
+            "consiglio": {
+                "segno": "X",
+                "quota_bookmaker": 3.35,
+                "prob_bookmaker": 29.9,
+                "prob_calcolata": 32.0,
+                "edge": 2.1,
+                "edge_grezzo": 2.1,
+                "semaforo": "gialla",
+                "bookmaker": "Betfair"
             }
         },
         {
