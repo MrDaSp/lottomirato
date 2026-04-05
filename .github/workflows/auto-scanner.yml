@@ -2,8 +2,11 @@ name: BetMirato Auto Scanner v2
 
 on:
   schedule:
-    # Esegue alle 10:00 e 17:00 ora italiana (8:00 e 15:00 UTC) per intercettare gli infortuni last-minute
-    - cron: '0 8,15 * * *'
+    # Esegue alle 10:00, 17:00, e 23:00 ora italiana (8:00, 15:00, 21:00 UTC)
+    # - Mattina: aggiorna quote pre-match
+    # - Pomeriggio: intercetta infortuni last-minute
+    # - Sera: cattura risultati delle partite serali
+    - cron: '0 8,15,21 * * *'
   workflow_dispatch:
 
 jobs:
@@ -34,7 +37,7 @@ jobs:
 
       - name: Run Results Auto-Referee
         env:
-          FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
+          ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
         run: python results_scanner.py
 
       - name: Commit and push changes

@@ -1,14 +1,26 @@
+#!/usr/bin/env python3
+"""
+BetMirato Auto-Referee – Risultati Partite
+
+Usa The-Odds-API /scores endpoint per recuperare i risultati
+delle partite completate negli ultimi 3 giorni.
+Non dipende più da API-Football (che ha limiti di stagione sul piano free).
+
+Eseguito 3x/giorno via GitHub Actions.
+Output: risultati.json (consumato dal frontend per l'auto-referee)
+"""
+
 import os
 import requests
 import json
 from datetime import datetime, timedelta
 
-# Configurazione API-Football
-API_KEY = os.environ.get('FOOTBALL_API_KEY')
-BASE_URL = "https://v3.football.api-sports.io"
-HEADERS = {
-    'x-apisports-key': API_KEY
-}
+# Configurazione - usa la stessa chiave dello scanner
+ODDS_API_KEY = os.environ.get('ODDS_API_KEY') or 'a9bf7a15ce5ac0810b051d11d35dbc72'
+ODDS_BASE_URL = "https://api.the-odds-api.com/v4/sports"
+
+# I campionati che monitoriamo (stessi di scanner.py)
+SPORT_KEYS = ['soccer_italy_serie_a', 'soccer_epl']
 
 # ========================================
 # NORMALIZZAZIONE NOMI (identica a scanner.py per garantire matching)
@@ -48,7 +60,7 @@ def norm(name):
 
 def genera_chiavi_match(home_name, away_name):
     """
-    Genera TUTTE le possibili chiavi per una partita, cosí il frontend
+    Genera TUTTE le possibili chiavi per una partita, così il frontend
     ha molte più chance di trovare il match.
     Formato chiavi: "home-away" tutto minuscolo senza spazi.
     """
@@ -57,7 +69,7 @@ def genera_chiavi_match(home_name, away_name):
     home_lower = home_name.lower()
     away_lower = away_name.lower()
     
-    # Chiave base originale (come faceva prima)
+    # Chiave base originale
     base = f"{home_name}-{away_name}".lower().replace(" ", "")
     chiavi.add(base)
     
@@ -87,74 +99,102 @@ def genera_chiavi_match(home_name, away_name):
 
 
 def fetch_recent_results():
-    if not API_KEY:
-        print("Errore: FOOTBALL_API_KEY non trovata.")
+    """
+    Recupera i risultati delle partite completate usando The-Odds-API /scores.
+    Supporta fino a 3 giorni nel passato.
+    """
+    if not ODDS_API_KEY:
+        print("Errore: ODDS_API_KEY non trovata.")
         return {}
-
-    # Controlliamo i risultati degli ultimi 5 giorni (per coprire weekend + infrasettimanali)
-    date_to = datetime.now().strftime('%Y-%m-%d')
-    date_from = (datetime.now() - timedelta(days=5)).strftime('%Y-%m-%d')
     
     results_map = {}
     
-    # Lista delle leghe che monitoriamo (solo quelle realmente usate dallo scanner)
-    leagues = [135, 39]  # Serie A, Premier League
-    
-    # Determina la stagione corretta (anno di inizio della stagione in corso)
-    now = datetime.now()
-    season = now.year if now.month >= 8 else now.year - 1
-    
-    for league_id in leagues:
-        print(f"Recupero risultati per Lega ID {league_id} (season {season})...")
-        url = f"{BASE_URL}/fixtures?league={league_id}&season={season}&from={date_from}&to={date_to}&status=FT"
+    for sport_key in SPORT_KEYS:
+        print(f"\nRecupero risultati per {sport_key}...")
+        
+        url = f"{ODDS_BASE_URL}/{sport_key}/scores/"
+        params = {
+            'apiKey': ODDS_API_KEY,
+            'daysFrom': 3  # Max lookback supportato dall'API
+        }
         
         try:
-            response = requests.get(url, headers=HEADERS, timeout=15)
-            data = response.json()
+            response = requests.get(url, params=params, timeout=15)
             
-            # Log errori API per debug
-            errors = data.get('errors', {})
-            if errors:
-                print(f"   ⚠️ API-Football errors: {errors}")
-            remaining = data.get('paging', {}).get('total', '?')
-            print(f"   API response status: {response.status_code}, results: {data.get('results', 0)}")
+            # Mostra quota rimanente
+            remaining = response.headers.get('x-requests-remaining', '?')
+            used = response.headers.get('x-requests-used', '?')
+            print(f"   API Quota: usate={used}, rimanenti={remaining}")
             
-            fixtures = data.get('response', [])
-            print(f"   -> {len(fixtures)} partite finite trovate")
+            if response.status_code != 200:
+                print(f"   ⚠️ Errore HTTP {response.status_code}: {response.text[:200]}")
+                continue
+                
+            events = response.json()
+            print(f"   -> {len(events)} eventi trovati")
             
-            for fixture in fixtures:
-                f_id = fixture['fixture']['id']
-                home_name = fixture['teams']['home']['name']
-                away_name = fixture['teams']['away']['name']
-                goals_home = fixture['goals']['home']
-                goals_away = fixture['goals']['away']
+            completed = 0
+            for event in events:
+                # Solo partite completate
+                if not event.get('completed', False):
+                    continue
+                
+                scores = event.get('scores', [])
+                if not scores or len(scores) < 2:
+                    continue
+                
+                home_team = event.get('home_team', '')
+                away_team = event.get('away_team', '')
+                
+                # The-Odds-API restituisce scores come lista di oggetti {name, score}
+                goals_home = None
+                goals_away = None
+                for score_entry in scores:
+                    if score_entry.get('name') == home_team:
+                        goals_home = int(score_entry.get('score', 0))
+                    elif score_entry.get('name') == away_team:
+                        goals_away = int(score_entry.get('score', 0))
+                
+                if goals_home is None or goals_away is None:
+                    print(f"   ⚠️ Score mancante per {home_team} vs {away_team}")
+                    continue
                 
                 # Determiniamo il segno finale
-                if goals_home > goals_away: final_result = "1"
-                elif goals_home < goals_away: final_result = "2"
-                else: final_result = "X"
+                if goals_home > goals_away:
+                    final_result = "1"
+                elif goals_home < goals_away:
+                    final_result = "2"
+                else:
+                    final_result = "X"
                 
                 result_data = {
                     "result": final_result,
                     "score": f"{goals_home}-{goals_away}",
-                    "date": fixture['fixture']['date'],
-                    "home": home_name,
-                    "away": away_name
+                    "date": event.get('commence_time', ''),
+                    "home": home_team,
+                    "away": away_team
                 }
                 
                 # Generiamo TUTTE le chiavi possibili per massimizzare il matching
-                chiavi = genera_chiavi_match(home_name, away_name)
+                chiavi = genera_chiavi_match(home_team, away_team)
                 for chiave in chiavi:
                     results_map[chiave] = result_data
-                    
-                print(f"   ✓ {home_name} {goals_home}-{goals_away} {away_name} ({final_result}) -> {len(chiavi)} chiavi")
+                
+                completed += 1
+                print(f"   ✓ {home_team} {goals_home}-{goals_away} {away_team} ({final_result}) -> {len(chiavi)} chiavi")
+            
+            print(f"   Totale completate: {completed}/{len(events)}")
                 
         except Exception as e:
-            print(f"Errore nel recupero della lega {league_id}: {e}")
+            print(f"Errore nel recupero di {sport_key}: {e}")
 
     return results_map
 
 if __name__ == "__main__":
+    print("=" * 60)
+    print("[BOT] BetMirato Auto-Referee – Risultati via The-Odds-API")
+    print("=" * 60)
+    
     recent_results = fetch_recent_results()
     
     output = {
