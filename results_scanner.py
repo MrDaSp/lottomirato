@@ -7,8 +7,7 @@ from datetime import datetime, timedelta
 API_KEY = os.environ.get('FOOTBALL_API_KEY')
 BASE_URL = "https://v3.football.api-sports.io"
 HEADERS = {
-    'x-rapidapi-host': "v3.football.api-sports.io",
-    'x-rapidapi-key': API_KEY
+    'x-apisports-key': API_KEY
 }
 
 # ========================================
@@ -92,22 +91,33 @@ def fetch_recent_results():
         print("Errore: FOOTBALL_API_KEY non trovata.")
         return {}
 
-    # Controlliamo i risultati degli ultimi 3 giorni
+    # Controlliamo i risultati degli ultimi 5 giorni (per coprire weekend + infrasettimanali)
     date_to = datetime.now().strftime('%Y-%m-%d')
-    date_from = (datetime.now() - timedelta(days=3)).strftime('%Y-%m-%d')
+    date_from = (datetime.now() - timedelta(days=5)).strftime('%Y-%m-%d')
     
     results_map = {}
     
-    # Lista delle leghe che monitoriamo
-    leagues = [135, 39, 140, 78, 61, 71, 94]
+    # Lista delle leghe che monitoriamo (solo quelle realmente usate dallo scanner)
+    leagues = [135, 39]  # Serie A, Premier League
+    
+    # Determina la stagione corretta (anno di inizio della stagione in corso)
+    now = datetime.now()
+    season = now.year if now.month >= 8 else now.year - 1
     
     for league_id in leagues:
-        print(f"Recupero risultati per Lega ID {league_id}...")
-        url = f"{BASE_URL}/fixtures?league={league_id}&from={date_from}&to={date_to}&status=FT"
+        print(f"Recupero risultati per Lega ID {league_id} (season {season})...")
+        url = f"{BASE_URL}/fixtures?league={league_id}&season={season}&from={date_from}&to={date_to}&status=FT"
         
         try:
-            response = requests.get(url, headers=HEADERS)
+            response = requests.get(url, headers=HEADERS, timeout=15)
             data = response.json()
+            
+            # Log errori API per debug
+            errors = data.get('errors', {})
+            if errors:
+                print(f"   ⚠️ API-Football errors: {errors}")
+            remaining = data.get('paging', {}).get('total', '?')
+            print(f"   API response status: {response.status_code}, results: {data.get('results', 0)}")
             
             fixtures = data.get('response', [])
             print(f"   -> {len(fixtures)} partite finite trovate")

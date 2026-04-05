@@ -26,10 +26,18 @@ FOOTBALL_API_KEY = os.environ.get('FOOTBALL_API_KEY') or ''
 FOOTBALL_API_BASE = 'https://v3.football.api-sports.io'
 FOOTBALL_HEADERS = {'x-apisports-key': FOOTBALL_API_KEY}
 
-# Mapping campionati
+# Mapping campionati - la season viene calcolata dinamicamente
+# Per campionati europei (ago-mag), season = anno di inizio
+def get_current_season():
+    from datetime import datetime
+    now = datetime.now()
+    return now.year if now.month >= 8 else now.year - 1
+
+CURRENT_SEASON = get_current_season()
+
 LEAGUES = {
-    'soccer_italy_serie_a': {'id': 135, 'name': 'Serie A', 'season': 2025},
-    'soccer_epl':           {'id': 39,  'name': 'Premier League', 'season': 2025}
+    'soccer_italy_serie_a': {'id': 135, 'name': 'Serie A', 'season': CURRENT_SEASON},
+    'soccer_epl':           {'id': 39,  'name': 'Premier League', 'season': CURRENT_SEASON}
 }
 SPORT_KEYS = list(LEAGUES.keys())
 
@@ -112,8 +120,17 @@ def apif_get(endpoint, params):
     try:
         r = requests.get(f"{FOOTBALL_API_BASE}/{endpoint}",
                          headers=FOOTBALL_HEADERS, params=params, timeout=15)
+        data = r.json()
+        
+        # Log dettagliato per debugging
+        errors = data.get('errors', {})
+        if errors:
+            print(f"  ⚠️ API-Football errors on /{endpoint}: {errors}")
+        results_count = data.get('results', 0)
+        print(f"  📡 /{endpoint} -> HTTP {r.status_code}, results: {results_count}")
+        
         if r.status_code == 200:
-            return r.json().get('response')
+            return data.get('response')
         print(f"  ⚠️ API-Football {r.status_code} su /{endpoint}")
         return None
     except Exception as e:
