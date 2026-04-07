@@ -1,5 +1,5 @@
 {
-    "ultimo_aggiornamento": "2026-04-06 21:31:45",
+    "ultimo_aggiornamento": "2026-04-07 08:54:32",
     "risultati": {
         "sassuolo-cagliari": {
             "result": "1",
@@ -8,13 +8,6 @@
             "home": "Sassuolo",
             "away": "Cagliari"
         },
-        "hellasverona-fiorentina": {
-            "result": "2",
-            "score": "0-1",
-            "date": "2026-04-04T16:00:00Z",
-            "home": "Hellas Verona",
-            "away": "Fiorentina"
-        },
         "verona-fiorentina": {
             "result": "2",
             "score": "0-1",
@@ -22,14 +15,21 @@
             "home": "Hellas Verona",
             "away": "Fiorentina"
         },
-        "sslazio-parma": {
+        "hellasverona-fiorentina": {
+            "result": "2",
+            "score": "0-1",
+            "date": "2026-04-04T16:00:00Z",
+            "home": "Hellas Verona",
+            "away": "Fiorentina"
+        },
+        "lazio-parma": {
             "result": "X",
             "score": "1-1",
             "date": "2026-04-04T18:45:00Z",
             "home": "Lazio",
             "away": "Parma"
         },
-        "lazio-parma": {
+        "sslazio-parma": {
             "result": "X",
             "score": "1-1",
             "date": "2026-04-04T18:45:00Z",
@@ -50,28 +50,7 @@
             "home": "Pisa",
             "away": "Torino"
         },
-        "internazionale-roma": {
-            "result": "1",
-            "score": "5-2",
-            "date": "2026-04-05T18:45:00Z",
-            "home": "Inter Milan",
-            "away": "AS Roma"
-        },
         "internazionale-asroma": {
-            "result": "1",
-            "score": "5-2",
-            "date": "2026-04-05T18:45:00Z",
-            "home": "Inter Milan",
-            "away": "AS Roma"
-        },
-        "inter-roma": {
-            "result": "1",
-            "score": "5-2",
-            "date": "2026-04-05T18:45:00Z",
-            "home": "Inter Milan",
-            "away": "AS Roma"
-        },
-        "intermilan-roma": {
             "result": "1",
             "score": "5-2",
             "date": "2026-04-05T18:45:00Z",
@@ -85,7 +64,28 @@
             "home": "Inter Milan",
             "away": "AS Roma"
         },
+        "intermilan-roma": {
+            "result": "1",
+            "score": "5-2",
+            "date": "2026-04-05T18:45:00Z",
+            "home": "Inter Milan",
+            "away": "AS Roma"
+        },
         "intermilan-asroma": {
+            "result": "1",
+            "score": "5-2",
+            "date": "2026-04-05T18:45:00Z",
+            "home": "Inter Milan",
+            "away": "AS Roma"
+        },
+        "inter-roma": {
+            "result": "1",
+            "score": "5-2",
+            "date": "2026-04-05T18:45:00Z",
+            "home": "Inter Milan",
+            "away": "AS Roma"
+        },
+        "internazionale-roma": {
             "result": "1",
             "score": "5-2",
             "date": "2026-04-05T18:45:00Z",
@@ -120,14 +120,7 @@
             "home": "Juventus",
             "away": "Genoa"
         },
-        "sscnapoli-milan": {
-            "result": "1",
-            "score": "1-0",
-            "date": "2026-04-06T18:45:00Z",
-            "home": "Napoli",
-            "away": "AC Milan"
-        },
-        "napoli-milan": {
+        "napoli-acmilan": {
             "result": "1",
             "score": "1-0",
             "date": "2026-04-06T18:45:00Z",
@@ -141,7 +134,14 @@
             "home": "Napoli",
             "away": "AC Milan"
         },
-        "napoli-acmilan": {
+        "napoli-milan": {
+            "result": "1",
+            "score": "1-0",
+            "date": "2026-04-06T18:45:00Z",
+            "home": "Napoli",
+            "away": "AC Milan"
+        },
+        "sscnapoli-milan": {
             "result": "1",
             "score": "1-0",
             "date": "2026-04-06T18:45:00Z",
