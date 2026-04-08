@@ -1,48 +1,6 @@
 {
-    "ultimo_aggiornamento": "2026-04-08 16:10:42",
+    "ultimo_aggiornamento": "2026-04-08 21:36:20",
     "risultati": {
-        "intermilan-roma": {
-            "result": "1",
-            "score": "5-2",
-            "date": "2026-04-05T18:45:00Z",
-            "home": "Inter Milan",
-            "away": "AS Roma"
-        },
-        "intermilan-asroma": {
-            "result": "1",
-            "score": "5-2",
-            "date": "2026-04-05T18:45:00Z",
-            "home": "Inter Milan",
-            "away": "AS Roma"
-        },
-        "internazionale-roma": {
-            "result": "1",
-            "score": "5-2",
-            "date": "2026-04-05T18:45:00Z",
-            "home": "Inter Milan",
-            "away": "AS Roma"
-        },
-        "inter-roma": {
-            "result": "1",
-            "score": "5-2",
-            "date": "2026-04-05T18:45:00Z",
-            "home": "Inter Milan",
-            "away": "AS Roma"
-        },
-        "inter-asroma": {
-            "result": "1",
-            "score": "5-2",
-            "date": "2026-04-05T18:45:00Z",
-            "home": "Inter Milan",
-            "away": "AS Roma"
-        },
-        "internazionale-asroma": {
-            "result": "1",
-            "score": "5-2",
-            "date": "2026-04-05T18:45:00Z",
-            "home": "Inter Milan",
-            "away": "AS Roma"
-        },
         "udinese-como": {
             "result": "X",
             "score": "0-0",
@@ -78,14 +36,14 @@
             "home": "Napoli",
             "away": "AC Milan"
         },
-        "sscnapoli-acmilan": {
+        "napoli-milan": {
             "result": "1",
             "score": "1-0",
             "date": "2026-04-06T18:45:00Z",
             "home": "Napoli",
             "away": "AC Milan"
         },
-        "napoli-milan": {
+        "sscnapoli-acmilan": {
             "result": "1",
             "score": "1-0",
             "date": "2026-04-06T18:45:00Z",
