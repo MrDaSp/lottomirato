@@ -1,33 +1,19 @@
 {
-    "ultimo_aggiornamento": "2026-04-09 09:00:35",
+    "ultimo_aggiornamento": "2026-04-09 16:14:10",
     "risultati": {
-        "udinese-como": {
-            "result": "X",
-            "score": "0-0",
-            "date": "2026-04-06T10:30:00Z",
-            "home": "Udinese",
-            "away": "Como"
-        },
-        "lecce-atalanta": {
-            "result": "2",
-            "score": "0-3",
-            "date": "2026-04-06T13:00:00Z",
-            "home": "Lecce",
-            "away": "Atalanta BC"
-        },
-        "lecce-atalantabc": {
-            "result": "2",
-            "score": "0-3",
-            "date": "2026-04-06T13:00:00Z",
-            "home": "Lecce",
-            "away": "Atalanta BC"
-        },
-        "juventus-genoa": {
+        "sscnapoli-milan": {
             "result": "1",
-            "score": "2-0",
-            "date": "2026-04-06T16:00:00Z",
-            "home": "Juventus",
-            "away": "Genoa"
+            "score": "1-0",
+            "date": "2026-04-06T18:45:00Z",
+            "home": "Napoli",
+            "away": "AC Milan"
+        },
+        "napoli-milan": {
+            "result": "1",
+            "score": "1-0",
+            "date": "2026-04-06T18:45:00Z",
+            "home": "Napoli",
+            "away": "AC Milan"
         },
         "napoli-acmilan": {
             "result": "1",
@@ -36,21 +22,7 @@
             "home": "Napoli",
             "away": "AC Milan"
         },
-        "sscnapoli-milan": {
-            "result": "1",
-            "score": "1-0",
-            "date": "2026-04-06T18:45:00Z",
-            "home": "Napoli",
-            "away": "AC Milan"
-        },
         "sscnapoli-acmilan": {
-            "result": "1",
-            "score": "1-0",
-            "date": "2026-04-06T18:45:00Z",
-            "home": "Napoli",
-            "away": "AC Milan"
-        },
-        "napoli-milan": {
             "result": "1",
             "score": "1-0",
             "date": "2026-04-06T18:45:00Z",
